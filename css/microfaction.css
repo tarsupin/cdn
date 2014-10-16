@@ -1,0 +1,87 @@
+
+/************************
+****** Page Layout ******
+************************/
+
+@media screen and (min-width:1421px) {
+	#content { margin-left:260px; max-width:100%; margin-right:305px; padding:0px; }
+	#panel-right { width:280px; }
+}
+
+@media screen and (min-width:1121px) and (max-width:1420px) {
+	#content { margin-left:260px; max-width:100%; margin-right:10px; padding:0px; }
+}
+
+@media screen and (min-width:921px) and (max-width:1120px) {
+	#content { margin-left:260px; margin-right:10px; padding:0px; }
+}
+
+@media screen and (min-width:501px) and (max-width:920px) {
+	#content { margin-left:0px; margin-right:10px; padding:0px; }
+}
+
+@media screen and (max-width:500px) {
+	#content { margin-left:0px; padding:5px; }
+}
+
+#panel-nav { width:245px; }
+
+
+/********************************
+****** Subscription Styles ******
+********************************/
+.s-tag { display:inline-block; font-size:0.8em; color:white; border-radius:6px; padding:4px; position:relative; margin-bottom:6px; }
+.s-tag-on { background-color:#aa99dd; }
+.s-tag-off { background-color:#c0c0c0; }
+
+.s-tag>a { color:white !important; }
+.s-tag>a:visited { color:white !important; }
+.s-tag>a:hover { color:white !important; }
+
+/****************************
+****** Category Styles ******
+****************************/
+
+.tag-line { font-size:18px; padding:4px; border-bottom:solid 1px #c0c0c0; }
+.tag-line:hover { background-color:#e0e0e0; }
+
+/**************************
+****** Thread Styles ******
+**************************/
+
+.overwrap-box { background-color:#ffffff; border:solid 1px #c0c0c0; border-radius:4px; padding:0px; margin-bottom:7px; }
+.overwrap-line { padding:0px 6px 0px 6px; font-size:1.2em; font-weight:bold; }
+
+.inner-line { position:relative; height:41px; border-bottom:solid 1px #c0c0c0; }
+.inner-line { padding:6px 0px 6px 0px; }
+.inner-line:hover { background-color:#ddffdd; }
+.inner-line>div { display:inline-block; vertical-align:middle; height:41px; color:#5d5d5d; overflow:hidden; }
+
+.inner-score { position:absolute; top:7px; left:0px; width:35px; text-align:center; line-height:120%; font-size:1.1em; }
+.inner-name { position:absolute; top:5px; left:35px; font-weight:bold; color:#56ccc8 !important; overflow:hidden; }
+.inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; }
+
+/**************************
+****** Voting Styles ******
+**************************/
+
+.voteUp { color: #555555 !important; transition:0.2s ease-in-out; }
+.voteUp:hover { color:green !important; }
+.vStayUp { color:green !important; }
+
+.voteDown { color: #555555 !important; transition:0.2s ease-in-out; }
+.voteDown:hover { color:red !important; }
+.vStayDown { color:red !important; }
+
+
+/***************************
+****** Comment Styles ******
+***************************/
+
+#comment-post { display:none; }
+.comment-wrap { padding-top:10px; }
+.comment-reply { padding-left:30px; border-left:solid 1px #cccccc; }
+.comment-options { font-size:0.7em; }
+.vote-box { float:left; width:20px; text-align:center; }
+.reply-box { margin-left:25px; }
+.reply-box>p { padding:0px; margin:0px; }

@@ -1,0 +1,104 @@
+
+/************************
+****** Page Layout ******
+************************/
+
+@media screen and (min-width:1421px) {
+	#content { background-color:white; margin-left:260px; max-width:100%; margin-right:305px; padding:22px; }
+	#panel-right { background-color:white; width:280px; }
+}
+
+@media screen and (min-width:1121px) and (max-width:1420px) {
+	#content { background-color:white; margin-left:260px; max-width:100%; margin-right:10px; padding:22px; }
+}
+
+@media screen and (min-width:921px) and (max-width:1120px) {
+	#content { background-color:white; margin-left:260px; margin-right:10px; padding:16px; }
+}
+
+@media screen and (min-width:501px) and (max-width:920px) {
+	#content { background-color:white; margin-left:0px; margin-right:10px; padding:12px; }
+}
+
+@media screen and (max-width:500px) {
+	#content { background-color:white; margin-left:0px; padding:10px; }
+}
+
+#panel-nav { width:245px; }
+
+
+/*************************
+****** Text & Fonts ******
+*************************/
+
+h1 { color:#152840; }
+h1 a { color:#152840 !important; }
+h1 a:hover { color:#475055 !important; }
+
+/***********************
+****** Icon Lists ******
+***********************/
+
+.icon-list>div { display:inline-block; margin:0 26px 12px 0; color:#b4b4b4; font-size:18px; font-family:"Arial"; line-height:30px; vertical-align:middle; }
+.icon-list>div>span { font-size:24px; line-height:30px; vertical-align:middle; color:#ea6060; }
+
+
+/***********************
+****** Pagination ******
+***********************/
+.paginate { float:left; }
+
+.paginate .page { color:#56ccc8; font-size:18px; font-weight:bold; padding:8px 13px 8px 13px; background-color:white; border-radius: 8px; }
+.paginate .page.active { background-color:#ea6060; color:white !important; }
+.paginate .page:hover { background-color:#fb7c7c; color:white !important; }
+
+/******************************
+****** "Tags" Search Bar ******
+******************************/
+
+#tagsWrap { z-index:20; position:relative; height:5px; }
+#tagsWrapInput { position:absolute; }
+#tagsHoverID { position:absolute;left:0px;top:35px;z-index:20; }
+#tagsHoverID>ul { list-style-type:none; padding:0px; margin:0px; }
+#tagsHoverID>ul>li { width:200px; background-color:#eeeeee; }
+#tagsHoverID>ul>li>a { display:block; font-size:18px; line-height:28px; color:#ee6060; background-color:#dddddd; text-decoration:none; padding:2px; }
+#tagsHoverID>ul>li>a:visited { color:#ee6060; }
+#tagsHoverID>ul>li>a:hover { color:blue; }
+
+/*********************
+****** Comments ******
+*********************/
+
+.comment { padding-top:22px; }
+.comment>div:first-child { overflow:hidden; max-width:100%; }
+.comment>div:first-child>img { float:left; margin-left:0px; }
+.comment>div:first-child>div { display:block; margin-left:84px; padding-top:16px; vertical-align:middle; }
+
+.comment>p { border:solid 1px #b0b0b0; border-bottom:none; padding:20px; margin-top:15px; }
+
+.extralinks { border:solid 1px #b0b0b0; padding:5px; overflow:hidden; }
+.extralinks a:first-child { float:left; }
+.extralinks a:last-child { float:right; }
+
+.comment>.comment { padding-top:20px; padding-left:32px; }
+.comment>.comment { padding-top:20px; padding-left:32px; border-left:solid 1px #b0b0b0; }
+
+
+#comment-form { margin-top:50px; }
+#comment-form>span { color:#ea6060;font-size:1.2em;vertical-align:bottom; }
+
+/******************************
+****** Main Blog Options ******
+******************************/
+
+.blog-header { width:100%; }
+
+.blog-hr
+{
+	margin:42px 0 32px 0;
+	height:4px;
+	background-color:black;
+}
+
+.double-space p { line-height:30px; }
+.double-space { padding-top:15px; }
