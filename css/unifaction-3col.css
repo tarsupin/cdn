@@ -446,17 +446,12 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 /********************************
 ****** Navigation Dropdown ******
 ********************************/
-#nav-list>li>ul { display: none; list-style-type: none; }
+#nav-list>li>ul { display: none; list-style-type: none; background-color:#59ABA9; }
 #nav-list>li:hover>ul { display: block; }
 
 #nav-list { list-style: none; position: relative; display: inline-table; }
 
 #nav-list>li a { display: block; }
-
-#nav-menu>ul {
-	background: #5f6975; border-radius: 0px; padding: 0;
-	position: absolute; top:100%; z-index:100;
-}
 
 #nav-user>ul {
 	background: #5f6975; border-radius: 0px; padding: 0;
@@ -464,14 +459,13 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 }
 
 #nav-list ul li {
-	float: none; 
-	border-top: 1px solid #6b727c;
-	border-bottom: 1px solid #575f6a;
+	float: none;
+	background:#3BA3A1;
 	position: relative;
 }
 
-#nav-list ul li a { color: #fff; padding:2px 20px 2px 25px; }
-#nav-list ul li a:hover { background: #4b545f; }
+#nav-list ul li a { color: #fff; padding:6px 20px 6px 25px; }
+#nav-list ul li a:hover { background: #59aba9; }
 
 /***********************
 ****** Left Panel ******
@@ -482,8 +476,6 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 .panel-box { display:block; width:100%; min-height:20px; font-size:14px; margin-bottom:7px; background-color:white; border:solid 1px #c0c0c0; }
 .panel-head { display:block; position:relative; max-width:100%; color:#152840; font-weight:bold; padding:14px 0 14px 14px; }
 .panel-head>a { color:#152840 !important; }
-
-.nav-arrow { position:absolute; color:#56ccc8; top:7px; right:12px; font-size:22px; }
 
 .panel-slots { margin:0px; padding:0px; } /* For Main Navigation */
 .panel-slots>li { border-bottom:solid 1px #d5f0ef; }
@@ -501,6 +493,11 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 .nav-slot:hover>a { color:white !important; transition:0.1s ease-in-out; }
 .nav-slot:hover { background-color:#56ccc8 !important; }
 .nav-slot:hover span { color:#16b9b3 !important; }
+
+.nav-arrow { position:absolute; color:#56ccc8; top:7px; right:12px; font-size:22px; }
+
+.nav-back>a { padding-left:42px; }
+.nav-back .nav-arrow { left:12px; }
 
 .nav-active { background-color:#56ccc8 !important; }
 .nav-active>a { color:white !important;  }
