@@ -143,7 +143,8 @@
 ************************/
 
 .user-role-admin { color:red; font-weight:bold; }
-.user-role-staff { color:orange; font-weight:bold; }
+.user-role-staff { font-weight:bold; }
 .user-role-artist { color:purple; font-weight:bold; }
 .user-role-mod { color:orange; font-weight:bold; }
+.user-role-programmer { color:green; font-weight:bold; }
 
