@@ -238,6 +238,77 @@ window.onload = function()
 
 /*
 	
+	--------------------------------
+	----- HOW TO USE getAjax() -----
+	--------------------------------
+	
+	To properly retrieve an AJAX string, use the following syntax:
+	
+	getAjax("http://example.com", "scriptName", "funcToActivate" "var1=a", "var2=b", ...)
+		
+		- Replace "http://example.com" with the site to connect to, or "" if loading the same site.
+		
+		- "scriptName" is the script you're calling.
+		
+		- "funcToActivate" is the function you're going to activate when the AJAX responds.
+			It will be run with the return value of the ajax call, i.e. funcToActivate(responseText);
+		
+		- Each argument passed to getAjax() after the AJAX DIV will provide additional parameters that
+		  get sent as $_POST values to that page.
+		  
+			^ For example, the script above would pass $_POST['var1'] = "a" and $_POST['var2'] = "b",
+			which can be used to generate data on that page.
+		
+	
+	<< A Simple Example >>
+		
+		var getData = getAjax('http://search.unifaction.com', 'mySearchScript', 'setVal=1', 'anotherVal=2');
+	
+	
+	<< Note about Cross-Origin Policies >>
+	
+		If you want to make a cross-site connection with JavaScript, you'll need to accept CORS at the destination page.
+		
+		This can be done with the following header:
+		
+			header('Access-Control-Allow-Origin: *');
+		
+		This header needs to be applied to the page you're connecting to.
+	
+*/
+
+// This function will retrieve data from an ajax script
+function getAjax(siteURL, scriptName, funcToActivate)
+{
+	var queryString = "";
+	
+	// Add the extra data values to the query string
+	// Each additional argument sent to this function is set up like: value=something
+	// So a full function call would look like this:
+	// getAjax('', 'myAjaxScript', 'mySpecialFunc', 'username=Joe', 'value=something');
+	for(var i = 2; i < arguments.length; i++)
+	{
+		queryString = queryString + "&" + arguments[i];
+	}
+	
+	gethttp = new XMLHttpRequest();
+	
+	gethttp.onreadystatechange = function()
+	{
+		if(gethttp.readyState == 4 && gethttp.status == 200)
+		{
+			window[funcToActivate](gethttp.responseText);
+		}
+	}
+	
+	// Run the Processor
+	gethttp.open("POST", (siteURL ? siteURL : "") + "/ajax/" + scriptName, true);
+	gethttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	gethttp.send(queryString);
+}
+
+/*
+	
 	---------------------------------
 	----- HOW TO USE loadAjax() -----
 	---------------------------------
@@ -348,9 +419,7 @@ function processAjax(siteURL, scriptName, ajaxDivID, queryString)
 	
 	// Run the Processor
 	xmlhttp.open("POST", (siteURL ? siteURL : "") + "/ajax/" + scriptName, true);
-	
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	
 	xmlhttp.send(queryString);
 }
 

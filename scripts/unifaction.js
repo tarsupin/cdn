@@ -111,20 +111,105 @@ window.addEventListener('resize', function(event)
 });
 
 
+/**********************************
+****** Footer Display Panels ******
+**********************************/
+
+var displayList = [];
+
+function toggleDisplay(elementID)
+{
+	// Get the index of the element in the displayList array
+	var elIndex = displayList.indexOf(elementID);
+	
+	// If the element is already in the display panel, remove it
+	if(elIndex >= 0)
+	{
+		setVisibility(displayList[elIndex], "", false);
+		displayList.splice(elIndex, 1);
+	}
+	
+	// If the element is not in the display panel, add it
+	else
+	{
+		displayList[displayList.length] = elementID;
+	}
+	
+	var len = displayList.length;
+	
+	// Loop through every display
+	for(var i = 0; i < len; i++)
+	{
+		// Get the next element in the list
+		var el = document.getElementById(displayList[i]);
+		
+		el.style.right = (i * 230) + "px";
+		
+		// Make the element visible
+		setVisibility(displayList[i], "block", false);
+	}
+	
+}
+
+
+/******************************
+****** Element Revealing ******
+******************************/
+
+// Set an element's visibility
+// Note: If "doToggle" is true, the element toggles between "" and type. Otherwise, sets type.
+function setVisibility(elementID, type, doToggle)
+{
+	// Set default "type" to "block"
+	if(typeof(type) == "undefined")
+	{
+		type = "block";
+	}
+	
+	// Set default "doToggle" setting to true
+	if(typeof(doToggle) == "undefined")
+	{
+		doToggle = true;
+	}
+	
+	var rev = document.getElementById(elementID);
+	
+	// If this element's visibility is getting toggled on/off by this switch
+	if(doToggle == true)
+	{
+		if(rev.style.display == "")
+		{
+			rev.style.display = type;
+		}
+		else if(rev.style.display == type)
+		{
+			rev.style.display = "";
+		}
+	}
+	
+	// If this element's visibility is getting set definitively (no toggle)
+	else
+	{
+		rev.style.display = type;
+	}
+}
+
+
 /*********************************
 ****** On Page-Load Handler ******
 *********************************/
+
 document.onreadystatechange = function()
 {
 	if(document.readyState == "complete")
 	{
+		var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+		
 		// If the widget panel is visible, load it through AJAX
 		if(document.getElementById("panel-right").offsetParent !== null)
 		{
-			var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-			
 			// Widgets aren't essential. Only show if the load time was less than one second.
-			if(loadTime < 1000)
+			if(loadTime < 300)
 			{
 				loadAjax("", "widget-panel", "panel-right");
 			}
@@ -133,17 +218,129 @@ document.onreadystatechange = function()
 		// If the widget panel isn't visible but the navigation panel is, load widgets there instead
 		else if(document.getElementById("panel-nav").offsetParent !== null)
 		{
-			var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-			
 			// Widgets aren't essential. Only show if the load time was less than one second.
-			if(loadTime < 1000)
+			if(loadTime < 300)
 			{
 				ajaxInsertType = "after";
 				loadAjax("", "widget-panel", "panel-nav");
 			}
 		}
+		
+		// Load the notifications
+		if(loadTime < 400)
+		{
+			runNotifications();
+		}
+		
+		// Run the core JS timer
+		// This timer runs every second, but only if the page is active
+		setInterval(function(){coreTimer()}, 1000);
 	}
 }
+
+// The Core Page Timer
+// This timer runs every second, but only if the page is active
+var coreTimeCount = 0;
+
+function coreTimer()
+{
+	// Update the timer every 1 second, but only if you're on the page
+	// If the document.hidden property doesn't work, this timer doesn't function
+	if(typeof(document.hidden) != "undefined")
+	{
+		if(document.hidden != true)
+		{
+			coreTimeCount++;
+		}
+	}
+	
+	// Notifications Updater - Run every 30 seconds
+	if(coreTimeCount % 30 == 0)
+	{
+		
+	}
+	
+	// Chat Updater - Run every 3 seconds
+	if(coreTimeCount % 3 == 0)
+	{
+		runNotifications();
+	}
+}
+
+/**************************
+****** Notifications ******
+**************************/
+
+function toggleNotifications()
+{
+	toggleDisplay('notif-box');
+	
+	getAjax("http://notifications.sync.test", "viewNotifications", "resetNotifyCount", "username=" + JSUser, "enc=" + JSEncrypt);
+}
+
+function resetNotifyCount()
+{
+	setNotifyButton(0);
+}
+
+function runNotifications()
+{
+	getAjax("http://notifications.sync.test", "getMyNotifications", "sync_notifications", "username=" + JSUser, "enc=" + JSEncrypt);
+}
+
+function sync_notifications(ajaxResponse)
+{
+	// Retrieve the JSON from the AJAX call
+	var noteData = JSON.parse(ajaxResponse);
+	
+	// Prepare Values
+	var notebox = document.getElementById("notif-box");
+	var prepHTML = "";
+	
+	var noteCount = noteData.notification_count;
+	var noteList = noteData.notifications;
+	var len = noteList.length;
+	
+	// Loop through each of the notifications and prepare the entry
+	for(var i = 0; i < len; i++)
+	{
+		prepHTML += '<div class="notif-slot"><div class="notif-entry"><a href="' + noteList[i]['url'] + '">' + noteList[i]['message'] + '</a></div></div>';
+	}
+	
+	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="#">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
+	
+	// Update the contents of the notification box
+	notebox.innerHTML = prepHTML;
+	
+	// Update the notification button
+	setNotifyButton(noteCount);
+}
+
+function setNotifyButton(noteCount)
+{
+	// Prepare Values
+	var noteButton = document.getElementById("notif-button");
+	var ncDisplay = document.getElementById("notif-count");
+	
+	// Update the notification count and button
+	ncDisplay.innerHTML = noteCount;
+	
+	if(noteCount == 0)
+	{
+		noteButton.style.color = "#c0c0c0";
+	}
+	else
+	{
+		noteButton.style.color = "#ee6666";
+	}
+}
+
+/***********************
+****** Encryption ******
+***********************/
+
+// var salt = (Math.random() + 1).toString(36).substring(3, 10));
+
 
 /********************************
 ****** Uni-Modal Functions ******
@@ -315,127 +512,6 @@ function CheckCharsRemaining(textboxID, divID, allowedChars)
 	}
 }
 
-/**********************************
-****** Bookmarks & Favorites ******
-**********************************/
-
-var shareButtons = document.getElementsByClassName("uni-share-buttons");
-var activeButton = "";
-
-for(var a = 0;a < shareButtons.length;a++)
-{
-	var sb = shareButtons[a];
-	
-	// Get Button Data
-	var shareType = sb.getAttribute("data-shareType");
-	var name = sb.getAttribute("data-name");
-	var url = sb.getAttribute("data-url");
-	
-	var title = sb.getAttribute("data-title");
-	var customStyle = sb.getAttribute("data-style");
-	
-	// Make sure all required fields are provided
-	if(!shareType) { continue; }
-	if(!name) { continue; }
-	if(!url) { continue; }
-	
-	if(!title) { title = ""; }
-	if(!customStyle) { customStyle == ""; }
-	
-	// Style the Button
-	if(customStyle != "custom")
-	{
-		sb.style.cursor = "pointer";
-		sb.style.display = "inline-block";
-		sb.style.fontFamily = "Arial";
-		sb.style.fontSize = "12px";
-		sb.style.color = "white";
-		sb.style.backgroundColor = "#56ccc8";
-		sb.style.padding = "4px 8px 4px 8px";
-		sb.style.borderRadius = "5px"
-	}
-	
-	// Create the button & it's functionality (based on what type it is)
-	switch(shareType)
-	{
-		case "bookmark":
-			sb.innerHTML = (title == "" ? "Bookmark" : title);
-			
-			sb.addEventListener("click", function()
-			{
-				// Get the necessary values
-				activeButton = this;
-				
-				group = this.getAttribute("data-group");
-				name = this.getAttribute("data-name");
-				url = this.getAttribute("data-url");
-				siteName = this.getAttribute("data-site");
-				
-				// Make sure all required fields are provided
-				if(!group) { return false; }
-				if(!name) { return false; }
-				if(!url) { return false; }
-				
-				// Set the bookmark as in queue
-				activeButton.style.backgroundColor = "black";
-				
-				// Call API
-				callURL("http://auth.test/api/share?shareType=bookmark&group=" + group + "&name=" + name + "&url=" + url + (siteName ? "&site=" + siteName : ""));
-			});
-		break;
-		
-		case "share":
-			sb.innerHTML = (title == "" ? "Share" : title);
-			
-			sb.addEventListener("click", function()
-			{
-				// Get the necessary values
-				activeButton = this;
-				
-				group = this.getAttribute("data-group");
-				name = this.getAttribute("data-name");
-				url = this.getAttribute("data-url");
-				siteName = this.getAttribute("data-site");
-				
-				// Make sure all required fields are provided
-				if(!group) { return false; }
-				if(!name) { return false; }
-				if(!url) { return false; }
-				
-				// Set the bookmark as in queue
-				activeButton.style.backgroundColor = "black";
-				
-				// Call API
-				callURL("http://auth.test/api/share?shareType=share&group=" + group + "&name=" + name + "&url=" + url + (siteName ? "&site=" + siteName : ""));
-			});
-		break;
-		
-		case "chat":
-			sb.innerHTML = (title == "" ? "Chat" : title);
-			
-			sb.addEventListener("click", function()
-			{
-				// Get the necessary values
-				activeButton = this;
-				
-				name = this.getAttribute("data-name");
-				url = this.getAttribute("data-url");
-				siteName = this.getAttribute("data-site");
-				
-				// Make sure all required fields are provided
-				if(!name) { return false; }
-				if(!url) { return false; }
-				
-				// Set the bookmark as in queue
-				activeButton.style.backgroundColor = "black";
-				
-				// Call API
-				callURL("http://fastchat.test/api/share?shareType=chat&name=" + name + "&url=" + url + (siteName ? "&site=" + siteName : ""));
-			});
-		break;
-	}
-}
-
 /*
 	
 	------------------------------------------
@@ -482,22 +558,4 @@ function callURL_Response(response)
 	}
 	
 	alert(response);
-	
-	/*
-	var txt = "";
-	
-	switch(typeof(data))
-	{
-		case "boolean": txt = (data == true ? "true" : "false"); break;
-		case "string": txt = data; break;
-		
-		default:
-			for(var key in data)
-			{
-				txt += key + " = " + data[key];
-				txt += "\n";
-			}
-		break;
-	}
-	*/
 }
