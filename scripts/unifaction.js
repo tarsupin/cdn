@@ -12,7 +12,7 @@ coreNav.onmouseover = function()
 
 coreNav.onmouseout = function()
 {
-	if(window.innerWidth > 1120)
+	if(window.innerWidth > 1520)
 	{
 		coreMenu_showFull();
 	}
@@ -85,14 +85,14 @@ function toggleMenu()
 
 window.addEventListener('resize', function(event)
 {
-	if(window.innerWidth > 920)
+	if(window.innerWidth > 1120)
 	{
 		var menu = document.getElementById("panel-nav");
 		menu.style.display = "block";
 		menu.style.position = "static";
 		menu.style.zIndex = "0";
 		
-		if(window.innerWidth > 1120)
+		if(window.innerWidth > 1520)
 		{
 			coreMenu_showFull();
 		}
@@ -117,16 +117,19 @@ window.addEventListener('resize', function(event)
 
 var displayList = [];
 
-function toggleDisplay(elementID)
+function toggleDisplay(elementID, forceOn)
 {
 	// Get the index of the element in the displayList array
 	var elIndex = displayList.indexOf(elementID);
 	
-	// If the element is already in the display panel, remove it
+	// If the element is already in the display panel, remove it (unless we're forcing it to display)
 	if(elIndex >= 0)
 	{
-		setVisibility(displayList[elIndex], "", false);
-		displayList.splice(elIndex, 1);
+		if(forceOn != true)
+		{
+			document.getElementById(elementID).style.display = "";
+			displayList.splice(elIndex, 1);
+		}
 	}
 	
 	// If the element is not in the display panel, add it
@@ -146,52 +149,9 @@ function toggleDisplay(elementID)
 		el.style.right = (i * 230) + "px";
 		
 		// Make the element visible
-		setVisibility(displayList[i], "block", false);
+		el.style.display = "block";
 	}
 	
-}
-
-
-/******************************
-****** Element Revealing ******
-******************************/
-
-// Set an element's visibility
-// Note: If "doToggle" is true, the element toggles between "" and type. Otherwise, sets type.
-function setVisibility(elementID, type, doToggle)
-{
-	// Set default "type" to "block"
-	if(typeof(type) == "undefined")
-	{
-		type = "block";
-	}
-	
-	// Set default "doToggle" setting to true
-	if(typeof(doToggle) == "undefined")
-	{
-		doToggle = true;
-	}
-	
-	var rev = document.getElementById(elementID);
-	
-	// If this element's visibility is getting toggled on/off by this switch
-	if(doToggle == true)
-	{
-		if(rev.style.display == "")
-		{
-			rev.style.display = type;
-		}
-		else if(rev.style.display == type)
-		{
-			rev.style.display = "";
-		}
-	}
-	
-	// If this element's visibility is getting set definitively (no toggle)
-	else
-	{
-		rev.style.display = type;
-	}
 }
 
 
@@ -227,14 +187,15 @@ document.onreadystatechange = function()
 		}
 		
 		// Load the notifications
-		if(loadTime < 400)
+		if(loadTime < 400 && typeof(JSUser) == "string")
 		{
 			runNotifications();
+			runFriendList()
+			
+			// Run the core JS timer
+			// This timer runs every second, but only if the page is active
+			setInterval(function(){coreTimer()}, 1000);
 		}
-		
-		// Run the core JS timer
-		// This timer runs every second, but only if the page is active
-		setInterval(function(){coreTimer()}, 1000);
 	}
 }
 
@@ -254,16 +215,22 @@ function coreTimer()
 		}
 	}
 	
-	// Notifications Updater - Run every 30 seconds
+	// Notifications Updater
 	if(coreTimeCount % 30 == 0)
 	{
-		
+		runNotifications();
+	}
+	
+	// Online Friend Updater
+	if(coreTimeCount % 25 == 0)
+	{
+		runFriendList()
 	}
 	
 	// Chat Updater - Run every 3 seconds
 	if(coreTimeCount % 3 == 0)
 	{
-		runNotifications();
+		runUserChat()
 	}
 }
 
@@ -290,6 +257,9 @@ function runNotifications()
 
 function sync_notifications(ajaxResponse)
 {
+	// If there was no response, end here
+	if(!ajaxResponse) { return; }
+	
 	// Retrieve the JSON from the AJAX call
 	var noteData = JSON.parse(ajaxResponse);
 	
@@ -332,6 +302,191 @@ function setNotifyButton(noteCount)
 	else
 	{
 		noteButton.style.color = "#ee6666";
+	}
+}
+
+
+/************************
+****** Friend List ******
+************************/
+
+function toggleFriends()
+{
+	toggleDisplay('friend-box');
+}
+
+function runFriendList()
+{
+	getAjax("http://friends.sync.test", "getMyFriends", "sync_friends", "username=" + JSUser, "enc=" + JSEncrypt);
+}
+
+function sync_friends(ajaxResponse)
+{
+	// If there was no response, end here
+	if(!ajaxResponse) { return; }
+	
+	// Retrieve the JSON from the AJAX call
+	var friendData = JSON.parse(ajaxResponse);
+	
+	// Prepare Values
+	var friendbox = document.getElementById("friend-box");
+	var prepHTML = "";
+	
+	var len = friendData.length;
+	
+	prepHTML += '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div>';
+	
+	// If you have no friends online, announce it
+	if(len == 0)
+	{
+		prepHTML += '<div style="padding:4px; color:#1f6f6d !important;">All of your friends are offline at the moment.</div>';
+	}
+	
+	// Loop through each of the notifications and prepare the entry
+	for(var i = 0; i < len; i++)
+	{
+		prepHTML += '<div class="friend-slot"><div class="friend-entry"><a href="javascript:toggleChat(\'' + friendData[i]['handle'] + '\')"><div class="friend-lside"><img src="' + friendData[i]['img'] + '" /></div><div class="friend-rside">' + friendData[i]['display_name'] + '<br />@' + friendData[i]['handle'] + '</div></a></div></div>';
+	}
+	
+	// Update the contents of the notification box
+	friendbox.innerHTML = prepHTML;
+	
+	// Update the notification button
+	setFriendButton(len);
+}
+
+function setFriendButton(friendCount)
+{
+	// Prepare Values
+	var friendButton = document.getElementById("friend-button");
+	var fcDisplay = document.getElementById("friend-count");
+	
+	// Update the notification count and button
+	fcDisplay.innerHTML = friendCount;
+	
+	if(friendCount == 0)
+	{
+		friendButton.style.color = "#c0c0c0";
+	}
+	else
+	{
+		friendButton.style.color = "#44ee99";
+	}
+}
+
+
+/******************************
+****** User Chat Display ******
+******************************/
+
+function toggleChat(toUser)
+{
+	// Check if the display has been created yet. If not, create it now.
+	var chatBox = document.getElementById("userChat-" + toUser);
+	
+	if(!chatBox)
+	{
+		// Create the chatBox element (since it doesn't exist yet)
+		document.body.insertAdjacentHTML('beforeend', '<div id="userChat-' + toUser + '" class="footer-display"></div>');
+		chatBox = document.getElementById("userChat-" + toUser);
+		
+		// Set the contents
+		chatBox.innerHTML = '<div class="chat-header">@' + toUser + '</div><div class="chat-inner"></div><div class="chat-footer"><input id="chat_write_' + toUser + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + toUser + '\'); }" /></div>';
+	}
+	
+	// Toggle the chat display
+	toggleDisplay('userChat-' + toUser);
+}
+
+function runUserChat()
+{
+	getAjax("http://messages.sync.test", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime);
+}
+
+function postUserChat(toUser)
+{
+	// Prepare Values
+	var chatInput = document.getElementById("chat_write_" + toUser);
+	var message = chatInput.value;
+	
+	// Prevent the post if it's empty
+	if(!message) { return; }
+	
+	// Post your chat to the chat system
+	getAjax("http://messages.sync.test", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime, "toUser=" + toUser, "message=" + message);
+	
+	// Clean the chat input
+	chatInput.value = "";
+	
+	// Show your own chat message
+	var chatBox = document.getElementById("userChat-" + toUser);
+	
+	chatBox.children[1].insertAdjacentHTML('beforeend', '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + JSProfilePic + '" /></div><div class="chat-rside">' + message + '</div></div></div>');
+	
+	// Scroll to the bottom of the chat box
+	chatBox.children[1].scrollTop = chatBox.scrollHeight;
+}
+
+function sync_chats(response)
+{
+	console.log(response);
+	
+	// If there was no response, end here
+	if(!response) { return; }
+	
+	// Retrieve the JSON from the AJAX call
+	var response = JSON.parse(response);
+	JSChatTime = response.time;
+	
+	// If there were no messages, end here
+	if(!response.messages) { return; }
+	var messages = response.messages;
+	
+	// Loop through each of the keys provided, if any
+	for(var key in messages)
+	{
+		// Check if the display has been created yet. If not, create it now.
+		var chatBox = document.getElementById("userChat-" + key);
+		
+		// Prepare Values
+		var prepHTML = "";
+		var len = messages[key].length;
+		
+		if(!chatBox)
+		{
+			// Create the chatBox element (since it doesn't exist yet)
+			document.body.insertAdjacentHTML('beforeend', '<div id="userChat-' + key + '" class="footer-display"></div>');
+			chatBox = document.getElementById("userChat-" + key);
+			
+			prepHTML += '<div class="chat-header">@' + key + '</div><div class="chat-inner">';
+			
+			// Loop through each of the chats and prepare the entry
+			for(var i = 0; i < len; i++)
+			{
+				prepHTML += '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div></div>';
+			}
+			
+			prepHTML += '</div><div class="chat-footer"><input id="chat_write_' + key + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + key + '\'); }" /></div>';
+			
+			// Set the contents
+			chatBox.innerHTML = prepHTML;
+		}
+		else
+		{
+			// Loop through each of the chats and prepare the entry
+			for(var i = 0; i < len; i++)
+			{
+				prepHTML += '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div></div>';
+			}
+			
+			chatBox.children[1].insertAdjacentHTML('beforeend', prepHTML);
+		}
+		
+		// Toggle the chat display
+		toggleDisplay('userChat-' + key, true);
+		
+		// Scroll to the bottom of the chat box
+		chatBox.children[1].scrollTop = chatBox.scrollHeight;
 	}
 }
 

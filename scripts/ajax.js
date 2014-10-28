@@ -291,13 +291,16 @@ function getAjax(siteURL, scriptName, funcToActivate)
 		queryString = queryString + "&" + arguments[i];
 	}
 	
-	gethttp = new XMLHttpRequest();
+	var gethttp = new XMLHttpRequest();
 	
 	gethttp.onreadystatechange = function()
 	{
 		if(gethttp.readyState == 4 && gethttp.status == 200)
 		{
-			window[funcToActivate](gethttp.responseText);
+			if(funcToActivate)
+			{
+				window[funcToActivate](gethttp.responseText);
+			}
 		}
 	}
 	
@@ -382,7 +385,7 @@ function loadAjax(siteURL, scriptName, ajaxDivID)
 // Don't call this directly. Use loadAjax() or processForm().
 function processAjax(siteURL, scriptName, ajaxDivID, queryString)
 {
-	xmlhttp = new XMLHttpRequest();
+	var xmlhttp = new XMLHttpRequest();
 	
 	xmlhttp.onreadystatechange = function()
 	{
