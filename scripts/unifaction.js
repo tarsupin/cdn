@@ -1,64 +1,11 @@
 
-/****************************
-****** Menu Navigation ******
-****************************/
-
-var coreNav = document.getElementById("panel-core");
-
-coreNav.onmouseover = function()
-{
-	coreMenu_showFull();
-}
-
-coreNav.onmouseout = function()
-{
-	if(window.innerWidth > 1520)
-	{
-		coreMenu_showFull();
-	}
-	else
-	{
-		coreMenu_showMini();
-	}
-}
-
-function coreMenu_showFull()
-{
-	// Expand the Core Nav
-	var val = document.getElementById("core-list");
-	val.style.width = "155px";
-	
-	// Set core navigation links to no display
-	var elements = document.getElementsByClassName("core-txt");
-	
-	for(var i = 0; i < elements.length; i++)
-	{
-		elements[i].style.display = "inline-block";
-	}
-}
-
-function coreMenu_showMini()
-{
-	// Restrict the Core Nav
-	var val = document.getElementById("core-list");
-	val.style.width = "55px";
-	
-	// Set core navigation links to no display
-	var elements = document.getElementsByClassName("core-txt");
-	
-	for(var i = 0; i < elements.length; i++)
-	{
-		elements[i].style.display = "none";
-	}
-}
-
 /******************************
 ****** Mobile Navigation ******
 ******************************/
 
 function toggleMenu()
 {
-	var menu = document.getElementById("panel-nav");
+	var menu = document.getElementById("panel-left");
 	
 	if(menu.style.display == "block")
 	{
@@ -78,38 +25,6 @@ function toggleMenu()
 		document.body.insertAdjacentHTML('afterbegin', '<div id="uni-modal-mobile" class="modal-bg" onclick="toggleMenu()"></div>');
 	}
 }
-
-/*************************************
-****** Mobile Effects on Resize ******
-*************************************/
-
-window.addEventListener('resize', function(event)
-{
-	if(window.innerWidth > 1120)
-	{
-		var menu = document.getElementById("panel-nav");
-		menu.style.display = "block";
-		menu.style.position = "static";
-		menu.style.zIndex = "0";
-		
-		if(window.innerWidth > 1520)
-		{
-			coreMenu_showFull();
-		}
-		else
-		{
-			coreMenu_showMini();
-		}
-	}
-	else
-	{
-		var menu = document.getElementById("panel-nav");
-		menu.style.display = "none";
-		
-		coreMenu_showMini();
-	}
-});
-
 
 /**********************************
 ****** Footer Display Panels ******
@@ -168,7 +83,7 @@ document.onreadystatechange = function()
 		// If the widget panel is visible, load it through AJAX
 		if(document.getElementById("panel-right").offsetParent !== null)
 		{
-			// Widgets aren't essential. Only show if the load time was less than one second.
+			// Widgets aren't essential. Only show if the load time was fast.
 			if(loadTime < 300)
 			{
 				loadAjax("", "widget-panel", "panel-right");
@@ -176,13 +91,13 @@ document.onreadystatechange = function()
 		}
 		
 		// If the widget panel isn't visible but the navigation panel is, load widgets there instead
-		else if(document.getElementById("panel-nav").offsetParent !== null)
+		else if(document.getElementById("panel-left").offsetParent !== null)
 		{
-			// Widgets aren't essential. Only show if the load time was less than one second.
+			// Widgets aren't essential. Only show if the load time was fast.
 			if(loadTime < 300)
 			{
 				ajaxInsertType = "after";
-				loadAjax("", "widget-panel", "panel-nav");
+				loadAjax("", "widget-panel", "panel-left");
 			}
 		}
 		
@@ -339,7 +254,7 @@ function sync_friends(ajaxResponse)
 	// If you have no friends online, announce it
 	if(len == 0)
 	{
-		prepHTML += '<div style="padding:4px; color:#1f6f6d !important;">All of your friends are offline at the moment.</div>';
+		prepHTML += '<div style="padding:4px; color:#1f6f6d !important;">All of your friends are offline at the moment.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
 	}
 	
 	// Loop through each of the notifications and prepare the entry

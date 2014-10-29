@@ -3,29 +3,6 @@
 ****** Page Layout ******
 ************************/
 
-@media screen and (min-width:1421px) {
-	#content { margin-left:260px; max-width:100%; margin-right:325px; padding:0px; }
-	#panel-right { width:300px; }
-}
-
-@media screen and (min-width:1121px) and (max-width:1420px) {
-	#content { margin-left:260px; max-width:100%; margin-right:10px; padding:0px; }
-}
-
-@media screen and (min-width:921px) and (max-width:1120px) {
-	#content { margin-left:260px; margin-right:10px; padding:0px; }
-}
-
-@media screen and (min-width:501px) and (max-width:920px) {
-	#content { margin-left:0px; margin-right:10px; padding:0px; }
-}
-
-@media screen and (max-width:500px) {
-	#content { margin-left:0px; padding:0px; }
-}
-
-#panel-nav { width:245px; }
-
 /*************************
 ****** Forum Styles ******
 *************************/
@@ -43,8 +20,8 @@
 .inner-line:hover { background-color:#e0e0e0; }
 .inner-line>div { display:inline-block; vertical-align:middle; border-right:solid 1px #c0c0c0; color:#5d5d5d; overflow:hidden; }
 
-.inner-name { font-weight:bold; color:#56ccc8 !important; }
-.inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; }
+.inner-name { white-space:nowrap; overflow:hidden; font-weight:bold; color:#56ccc8 !important; }
+.inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; overflow:hidden; white-space:nowrap; }
 
 .inner-posts { text-align:center; line-height:38px; }
 .inner-views { text-align:center; line-height:38px; }
@@ -93,6 +70,17 @@
 	.inner-details { width:34%; }
 }
 
+@media (max-width:549px) {
+	.overwrap-name { width:100% }
+	.overwrap-posts { display:none !important; }
+	.overwrap-views { display:none !important; }
+	.overwrap-details { display:none !important; }
+	
+	.inner-name { width:100%; }
+	.inner-posts { display:none !important; }
+	.inner-views { display:none !important; }
+	.inner-details { display:none !important; }
+}
 
 /**************************
 ****** Thread Styles ******
