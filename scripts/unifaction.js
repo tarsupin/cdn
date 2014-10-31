@@ -78,15 +78,30 @@ document.onreadystatechange = function()
 {
 	if(document.readyState == "complete")
 	{
+		// Prepare Values
 		var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+		
+		// Attempt to retrieve the active hashtag of the page
+		// The active hashtag indicates what is relevant on the page, and may determine what gets loaded
+		var activeHashtag = document.getElementById('activeHashtag');
+		
+		if(!activeHashtag)
+		{
+			activeHashtag = "";
+		}
+		else
+		{
+			activeHashtag = activeHashtag.content;
+		}
 		
 		// If the widget panel is visible, load it through AJAX
 		if(document.getElementById("panel-right").offsetParent !== null)
 		{
 			// Widgets aren't essential. Only show if the load time was fast.
-			if(loadTime < 300)
+			if(loadTime < 1500)
 			{
-				loadAjax("", "widget-panel", "panel-right");
+				ajaxInsertType = "after";
+				loadAjax("", "widget-panel", "panel-right", "activeHashtag=" + activeHashtag);
 			}
 		}
 		
@@ -94,33 +109,60 @@ document.onreadystatechange = function()
 		else if(document.getElementById("panel-left").offsetParent !== null)
 		{
 			// Widgets aren't essential. Only show if the load time was fast.
-			if(loadTime < 300)
+			if(loadTime < 1500)
 			{
 				ajaxInsertType = "after";
-				loadAjax("", "widget-panel", "panel-left");
+				loadAjax("", "widget-panel", "panel-left", "activeHashtag=" + activeHashtag);
 			}
 		}
 		
-		// Load the notifications
-		if(loadTime < 400 && typeof(JSUser) == "string")
+		// Load the notifications (if you're logged in)
+		if(loadTime < 1500)
 		{
-			runNotifications();
-			runFriendList()
+			if(typeof(JSUser) == "string")
+			{
+				runNotifications();
+				runFriendList()
+				runUserChat();
+			}
 			
 			// Run the core JS timer
 			// This timer runs every second, but only if the page is active
-			setInterval(function(){coreTimer()}, 1000);
+			setInterval(function(){coreTimer()}, 250);
 		}
 	}
 }
 
-// The Core Page Timer
-// This timer runs every second, but only if the page is active
+// The Core Page Timers
+// Every "tick" is .25 seconds. Example: an interval of 4 ticks is 1 second.
 var coreTimeCount = 0;
+var timers = {}
 
+// Notifications Timer
+timers.notifications = {};
+timers.notifications.interval = 120;
+timers.notifications.next = 120;
+
+// Friends Timer
+timers.friends = {}
+timers.friends.interval = 100;
+timers.friends.next = 100;
+
+// User Chat Timer
+timers.userchat = {}
+timers.userchat.interval = 12;
+timers.userchat.next = 12;
+
+// Chat Timer
+timers.chat = {}
+timers.chat.interval = 4;
+timers.chat.next = 4;
+
+// The core timer runs 4 times every second, but only if you're on the page
+// When the core timer hits an interval of one of the page timers, it runs the appropriate function
+// It will also set the timer forward (based on its current interval)
 function coreTimer()
 {
-	// Update the timer every 1 second, but only if you're on the page
 	// If the document.hidden property doesn't work, this timer doesn't function
 	if(typeof(document.hidden) != "undefined")
 	{
@@ -130,22 +172,36 @@ function coreTimer()
 		}
 	}
 	
-	// Notifications Updater
-	if(coreTimeCount % 30 == 0)
+	// If you're logged in, run the user's update handlers
+	if(typeof(JSUser) == "string")
 	{
-		runNotifications();
+		// Notifications Updater
+		if(coreTimeCount >= timers.notifications.next)
+		{
+			timers.notifications.next = coreTimeCount + timers.notifications.interval;
+			runNotifications();
+		}
+		
+		// Friend Updater
+		if(coreTimeCount >= timers.friends.next)
+		{
+			timers.friends.next = coreTimeCount + timers.friends.interval;
+			runFriendList();
+		}
+		
+		// User Chat Updater
+		if(coreTimeCount >= timers.userchat.next)
+		{
+			timers.userchat.next = coreTimeCount + timers.userchat.interval;
+			runUserChat();
+		}
 	}
 	
-	// Online Friend Updater
-	if(coreTimeCount % 25 == 0)
+	// Chat Updater
+	if(coreTimeCount >= timers.chat.next)
 	{
-		runFriendList()
-	}
-	
-	// Chat Updater - Run every 3 seconds
-	if(coreTimeCount % 3 == 0)
-	{
-		runUserChat()
+		timers.chat.next = coreTimeCount + timers.chat.interval;
+		runChatUpdate();
 	}
 }
 
@@ -156,6 +212,15 @@ function coreTimer()
 function toggleNotifications()
 {
 	toggleDisplay('notif-box');
+	
+	// Run special display for guests
+	if(typeof(JSUser) == "undefined")
+	{
+		// Update the contents of the notifications box
+		document.getElementById("notif-box").innerHTML = '<div class="notif-slot"><div class="notif-entry"><a href="http://unifaction.community">Check out UniFaction\'s Communities!</a></div></div><div class="notif-slot"><div class="notif-entry"><a href="http://unifaction.com/discover">Discover what UniFaction has to offer you!</a></div></div><div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.com/register">Join UniFaction <span class="icon-arrow-right"></span></a></div></div>';
+		
+		return;
+	}
 	
 	getAjax("http://notifications.sync.test", "viewNotifications", "resetNotifyCount", "username=" + JSUser, "enc=" + JSEncrypt);
 }
@@ -228,6 +293,15 @@ function setNotifyButton(noteCount)
 function toggleFriends()
 {
 	toggleDisplay('friend-box');
+	
+	// Run special display for guests
+	if(typeof(JSUser) == "undefined")
+	{
+		// Update the contents of the friends box
+		document.getElementById("friend-box").innerHTML = '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div><div style="padding:4px; color:#1f6f6d !important;">Log in to see which of your friends are online.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Join UniFaction <span class="icon-arrow-right"></span></a></div>';
+		
+		return;
+	}
 }
 
 function runFriendList()
@@ -306,7 +380,7 @@ function toggleChat(toUser)
 		chatBox = document.getElementById("userChat-" + toUser);
 		
 		// Set the contents
-		chatBox.innerHTML = '<div class="chat-header">@' + toUser + '</div><div class="chat-inner"></div><div class="chat-footer"><input id="chat_write_' + toUser + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + toUser + '\'); }" /></div>';
+		chatBox.innerHTML = '<div class="chat-header">@' + toUser + '<div class="close-display"><a href="javascript:toggleChat(\'' + toUser + '\');">X</a></div></div><div class="chat-inner"></div><div class="chat-footer"><input id="chat_write_' + toUser + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + toUser + '\'); }" /></div>';
 	}
 	
 	// Toggle the chat display
@@ -336,16 +410,14 @@ function postUserChat(toUser)
 	// Show your own chat message
 	var chatBox = document.getElementById("userChat-" + toUser);
 	
-	chatBox.children[1].insertAdjacentHTML('beforeend', '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + JSProfilePic + '" /></div><div class="chat-rside">' + message + '</div></div></div>');
+	chatBox.children[1].insertAdjacentHTML('beforeend', '<div class="chat-line"><div class="chat-lside"><img src="' + JSProfilePic + '" /></div><div class="chat-rside">' + message + '</div></div>');
 	
 	// Scroll to the bottom of the chat box
-	chatBox.children[1].scrollTop = chatBox.scrollHeight;
+	chatBox.children[1].scrollTop = chatBox.children[1].scrollHeight;
 }
 
 function sync_chats(response)
 {
-	console.log(response);
-	
 	// If there was no response, end here
 	if(!response) { return; }
 	
@@ -378,7 +450,7 @@ function sync_chats(response)
 			// Loop through each of the chats and prepare the entry
 			for(var i = 0; i < len; i++)
 			{
-				prepHTML += '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div></div>';
+				prepHTML += '<div class="chat-line"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div>';
 			}
 			
 			prepHTML += '</div><div class="chat-footer"><input id="chat_write_' + key + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + key + '\'); }" /></div>';
@@ -391,7 +463,7 @@ function sync_chats(response)
 			// Loop through each of the chats and prepare the entry
 			for(var i = 0; i < len; i++)
 			{
-				prepHTML += '<div class="chat-slot"><div class="chat-entry"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div></div>';
+				prepHTML += '<div class="chat-line"><div class="chat-lside"><img src="' + messages[key][i]['img'] + '" /></div><div class="chat-rside">' + messages[key][i]['message'] + '</div></div>';
 			}
 			
 			chatBox.children[1].insertAdjacentHTML('beforeend', prepHTML);
@@ -401,8 +473,99 @@ function sync_chats(response)
 		toggleDisplay('userChat-' + key, true);
 		
 		// Scroll to the bottom of the chat box
-		chatBox.children[1].scrollTop = chatBox.scrollHeight;
+		chatBox.children[1].scrollTop = chatBox.children[1].scrollHeight;
 	}
+}
+
+
+/**********************************
+****** Chat System + Widgets ******
+**********************************/
+
+// When the Chat Form is submitted
+function submitChatForm()
+{
+	// Prepare Values
+	var message = document.getElementById("chat_message").value;
+	
+	// Clean the chat box, but refocus there
+	document.getElementById("chat_message").value = "";
+	
+	// Run the chat update with a designated message
+	runChatUpdate(message);
+	return false;
+}
+
+// Add messages to the chat
+function load_chat(response)
+{
+	// If there is no response this interval:
+	if(response == "")
+	{
+		// If the chat interval is less than 30 seconds long, add 1 tick to the interval
+		if(timers.chat.interval < 120) { timers.chat.interval += 1; }
+		return;
+	}
+	
+	// If a response was received
+	else
+	{
+		// Set the chat interval to be shorter, especially if the interval is less than 15 seconds
+		if(timers.chat.interval < 60) { timers.chat.interval = 8; } else { timers.chat.interval = 20; }
+	}
+	
+	// Prepare Values
+	var chatInner = document.getElementById("chat-inner");
+	
+	var response = JSON.parse(response);
+	var lastTime = response.last_time;
+	var messages = response.messages;
+	
+	var len = messages.length;
+	
+	// Update the last chat time
+	document.getElementById("chat_time").value = lastTime;
+	
+	// Load each of the new messages into the chat
+	for(var i = 0; i < len; i++)
+	{
+		chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="' + messages[i]["img"] + '" /></div><div class="chat-rside">[' + messages[i]["time"] + '] ' + messages[i]["message"] + '</div></div>');
+	}
+	
+	chatInner.scrollTop = chatInner.scrollHeight;
+}
+
+function runChatUpdate(message)
+{
+	// Set default message to nothing if one is not provided
+	if(typeof(message) == "undefined")
+	{
+		message = "";
+	}
+	
+	// Prepare Values
+	var channel = document.getElementById("chat_channel").value;
+	var lastpost = document.getElementById("chat_time").value;
+	var username = document.getElementById("chat_username");
+	
+	// If the user is not logged in, set appropriate values
+	if(!username)
+	{
+		username = "";
+		JSEncrypt = "";
+	}
+	else
+	{
+		username = username.value;
+	}
+	
+	// Load balance the chat servers using the channel string as a numeric algorithm
+	var chatServID = parseInt((channel.charCodeAt(0) + channel.charCodeAt(1)) % 10);
+	
+	if(!chatServID) { return; }
+	
+	// Call the AJAX file that is going to add your values
+	getAjax("http://chat" + chatServID + ".sync.test", "getChatData", "load_chat", "lastpost=" + lastpost, "username=" + username, "message=" + message, "enc=" + JSEncrypt, "channel=" + channel);
 }
 
 /***********************
