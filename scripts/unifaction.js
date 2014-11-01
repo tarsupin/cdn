@@ -94,25 +94,30 @@ document.onreadystatechange = function()
 			activeHashtag = activeHashtag.content;
 		}
 		
-		// If the widget panel is visible, load it through AJAX
-		if(document.getElementById("panel-right").offsetParent !== null)
-		{
-			// Widgets aren't essential. Only show if the load time was fast.
-			if(loadTime < 1500)
-			{
-				ajaxInsertType = "after";
-				loadAjax("", "widget-panel", "panel-right", "activeHashtag=" + activeHashtag);
-			}
-		}
+		var wPanel = document.getElementById("panel-right");
 		
-		// If the widget panel isn't visible but the navigation panel is, load widgets there instead
-		else if(document.getElementById("panel-left").offsetParent !== null)
+		if(wPanel)
 		{
-			// Widgets aren't essential. Only show if the load time was fast.
-			if(loadTime < 1500)
+			// If the widget panel is visible, load it through AJAX
+			if(wPanel.offsetParent !== null)
 			{
-				ajaxInsertType = "after";
-				loadAjax("", "widget-panel", "panel-left", "activeHashtag=" + activeHashtag);
+				// Widgets aren't essential. Only show if the load time was fast.
+				if(loadTime < 1500)
+				{
+					ajaxInsertType = "after";
+					loadAjax("", "widget-panel", "panel-right", "activeHashtag=" + activeHashtag);
+				}
+			}
+			
+			// If the widget panel isn't visible but the navigation panel is, load widgets there instead
+			else if(wPanel.offsetParent !== null)
+			{
+				// Widgets aren't essential. Only show if the load time was fast.
+				if(loadTime < 1500)
+				{
+					ajaxInsertType = "after";
+					loadAjax("", "widget-panel", "panel-left", "activeHashtag=" + activeHashtag);
+				}
 			}
 		}
 		
@@ -145,13 +150,13 @@ timers.notifications.next = 120;
 
 // Friends Timer
 timers.friends = {}
-timers.friends.interval = 100;
-timers.friends.next = 100;
+timers.friends.interval = 60;
+timers.friends.next = 60;
 
 // User Chat Timer
 timers.userchat = {}
-timers.userchat.interval = 12;
-timers.userchat.next = 12;
+timers.userchat.interval = 10;
+timers.userchat.next = 10;
 
 // Chat Timer
 timers.chat = {}
@@ -235,13 +240,25 @@ function runNotifications()
 	getAjax("http://notifications.sync.test", "getMyNotifications", "sync_notifications", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
-function sync_notifications(ajaxResponse)
+function sync_notifications(response)
 {
-	// If there was no response, end here
-	if(!ajaxResponse) { return; }
+	// If there is no response this interval:
+	if(!response)
+	{
+		// If the chat interval is less than 60 seconds long, add 4 ticks to the interval
+		if(timers.notifications.interval < 240) { timers.notifications.interval += 4; }
+		return;
+	}
+	
+	// If a response was received
+	else
+	{
+		// Set the chat interval to be shorter
+		timers.notifications.interval = 120;
+	}
 	
 	// Retrieve the JSON from the AJAX call
-	var noteData = JSON.parse(ajaxResponse);
+	var noteData = JSON.parse(response);
 	
 	// Prepare Values
 	var notebox = document.getElementById("notif-box");
@@ -309,13 +326,25 @@ function runFriendList()
 	getAjax("http://friends.sync.test", "getMyFriends", "sync_friends", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
-function sync_friends(ajaxResponse)
+function sync_friends(response)
 {
-	// If there was no response, end here
-	if(!ajaxResponse) { return; }
+	// If there is no response this interval:
+	if(!response)
+	{
+		// If the chat interval is less than 40 seconds long, add 4 ticks to the interval
+		if(timers.friends.interval < 160) { timers.friends.interval += 4; }
+		return;
+	}
+	
+	// If a response was received
+	else
+	{
+		// Set the chat interval to be shorter
+		timers.friends.interval = 60;
+	}
 	
 	// Retrieve the JSON from the AJAX call
-	var friendData = JSON.parse(ajaxResponse);
+	var friendData = JSON.parse(response);
 	
 	// Prepare Values
 	var friendbox = document.getElementById("friend-box");
@@ -418,8 +447,20 @@ function postUserChat(toUser)
 
 function sync_chats(response)
 {
-	// If there was no response, end here
-	if(!response) { return; }
+	// If there is no response this interval:
+	if(!response)
+	{
+		// If the chat interval is less than 20 seconds long, add 1 tick to the interval
+		if(timers.userchat.interval < 80) { timers.userchat.interval += 1; }
+		return;
+	}
+	
+	// If a response was received
+	else
+	{
+		// Set the chat interval to be shorter, especially if the interval is less than 15 seconds
+		if(timers.userchat.interval < 40) { timers.userchat.interval = 6; } else { timers.userchat.interval = 12; }
+	}
 	
 	// Retrieve the JSON from the AJAX call
 	var response = JSON.parse(response);
@@ -500,7 +541,7 @@ function submitChatForm()
 function load_chat(response)
 {
 	// If there is no response this interval:
-	if(response == "")
+	if(!response)
 	{
 		// If the chat interval is less than 30 seconds long, add 1 tick to the interval
 		if(timers.chat.interval < 120) { timers.chat.interval += 1; }
@@ -537,6 +578,12 @@ function load_chat(response)
 
 function runChatUpdate(message)
 {
+	// Check if the chat widget exists
+	var channel = document.getElementById("chat_channel");
+	
+	// If the channel doesn't exist, there is no chat widget. End here.
+	if(!channel) { return; }
+	
 	// Set default message to nothing if one is not provided
 	if(typeof(message) == "undefined")
 	{
@@ -544,7 +591,7 @@ function runChatUpdate(message)
 	}
 	
 	// Prepare Values
-	var channel = document.getElementById("chat_channel").value;
+	channel = channel.value;
 	var lastpost = document.getElementById("chat_time").value;
 	var username = document.getElementById("chat_username");
 	
@@ -791,4 +838,661 @@ function callURL_Response(response)
 	}
 	
 	alert(response);
+}
+
+/*
+	
+	-----------------------------------
+	----- HOW TO USE searchAjax() -----
+	-----------------------------------
+	
+	searchAjax() is used to activate searching functionality.
+	
+	searchAjax("scriptName", "searchBoxID", "searchInputID", 350)
+		
+		- "scriptName" is the script you're calling.
+		
+		- "searchBoxID" is the div ID on the page that will be update via AJAX.
+		
+		- "searchInputID" is the ID of the text input that you're using for the search.
+		
+		- 350 represents the millisecond delay for how long to wait before processing user input.
+				- This prevents unnecessary updating for each click.
+				- The default value will automatically adjust based on character length.
+	
+	
+	<< A Simple Example >>
+		
+		<input id="searchInputID"
+				type="text" name="blah" value="" placeholder="Search . . ."
+				onkeyup='searchAjax("basicSearch", "searchBoxID", "searchInputID")' />
+	
+*/
+
+// Important Variables
+var nextUpdate = 0;			// Keeps track of the last time that user input was sent
+var lastInput = "";			// Tracks the state of the last input that was entered
+var searchActive = false;	// If the search is active.
+var ajaxInsertType = "";	// Set to "after" to cause AJAX loads to add to a div rather than replace it.
+var ajaxReturnFunc = "";	// If set, AJAX responses will run the designated function you assign.
+
+var g_siteURL = "";
+var g_scriptName = "";
+var g_ajaxDivID = "";
+
+// Track dropdown selection (up/down keys)
+var curDropIndex = -1;
+
+// This function will load the retrieved data into the "AJAX DIV".
+function searchAjax(siteURL, scriptName, searchBoxID, searchInputID, query, delay)
+{
+	// Prepare Default Values
+	delay = typeof delay !== "undefined" ? delay : -1;
+	
+	// Store Variables for the Search
+	g_siteURL = siteURL;
+	g_scriptName = scriptName;
+	g_ajaxDivID = searchBoxID;
+	
+	// Start the update tester (if it is currently inactive)
+	if(searchActive == false)
+	{
+		searchActive = true;
+		searchUpdateChecker();
+	}
+	
+	// Get Important Data
+	var d = new Date();
+	var ls = query ? query : document.getElementById(searchInputID).value;
+	
+	// Update the last input (to test if it's different)
+	if(ls != lastInput)
+	{
+		if(delay == -1)
+		{
+			delay = 200 + (15 * ls.length);
+		}
+		
+		nextUpdate = d.getTime() + delay;
+		lastInput = ls;
+	}
+}
+
+// This function works exclusively with the main search engine bar
+function searchEngineAjax()
+{
+	// Prepare Values
+	var siteURL = "http://search.unifaction.com";
+	var query = document.getElementById("searchInputID").value;
+	
+	// Change the behavior if the first character is different
+	if(query.charAt(0) == "#")
+	{
+		// siteURL = "http://hashtag.unifaction.com";
+	}
+	else if(query.charAt(0) == "@")
+	{
+		siteURL = "http://auth.unifaction.com";
+	}
+	
+	// Run the Search
+	searchAjax(siteURL, "search", "searchHoverID", "searchInputID", query);
+}
+
+// This function checks every few milliseconds to see if an update should be processed
+function searchUpdateChecker()
+{
+	var d = new Date();
+	
+	// Update the search (if the update time has passed)
+	if(nextUpdate != 0 && d.getTime() > nextUpdate)
+	{
+		curDropIndex = -1;
+		nextUpdate = 0;
+		loadAjax(g_siteURL, g_scriptName, g_ajaxDivID, "search=" + lastInput);
+		searchActive = false;
+	}
+	else
+	{
+		// Continue to run the updater
+		setTimeout(searchUpdateChecker, 50);
+	}
+}
+
+/********************************
+****** Search Box Handling ******
+********************************/
+
+// When a search box is selected
+function focusSearch(event, dropdownID)
+{
+	// event.target.id;	// The ID of the input being used
+	
+	var searchDropdown = document.getElementById(dropdownID);
+	
+	// Show the Dropdown
+	searchDropdown.style.display = "block";
+	
+	curDropIndex = -1;
+}
+
+// When a search box is deselected
+function blurSearch(event, dropdownID)
+{
+	var searchDropdown = document.getElementById(dropdownID);
+	
+	// Hide the Dropdown
+	setTimeout(function() {
+		searchDropdown.style.display = "none";
+	}, 130);
+	
+	// Restore all dropdowns to their standard appearance
+	var option = searchDropdown.getElementsByTagName("a");
+	
+	for(var i = 0;i < option.length;i++)
+	{
+		option[i].className = "searchSel";
+	}
+	
+	curDropIndex = -1;
+}
+
+// This function handles the up/down/enter handling for search boxes
+// It allows you to navigate with keys to click on links
+function showSelectedSearch(event, dropdownID)
+{
+	var searchDropdown = document.getElementById(dropdownID);
+	var option = searchDropdown.getElementsByTagName("a");
+	
+	// If there are no children, end here
+	if(option.length == 0)
+	{
+		curDropIndex = -1;
+		return false;
+	}
+	
+	// Down Key
+	if(event.keyCode == 40)
+	{
+		curDropIndex = curDropIndex + 1;
+		if(curDropIndex >= option.length) { curDropIndex = 0; }
+	}
+	
+	// UP Key
+	else if(event.keyCode == 38)
+	{
+		curDropIndex = curDropIndex - 1;
+		if(curDropIndex <= -1) { curDropIndex = option.length - 1; }
+	}
+	
+	// Enter Key
+	else if(event.keyCode == 13)
+	{
+		var selectedIndex = curDropIndex;
+		blurSearch(event, dropdownID);
+		
+		if(option[selectedIndex].href.indexOf("javascript:") > -1)
+		{
+			var rmj = option[selectedIndex].href.replace("javascript:", "");
+			
+			eval(rmj);
+		}
+		else
+		{
+			window.location = option[selectedIndex].href;
+		}
+	}
+	
+	// Set the current index as active
+	if(typeof(option[curDropIndex]) != "undefined")
+	{
+		// Restore all dropdowns to their standard appearance
+		for(var i = 0;i < option.length;i++)
+		{
+			option[i].className = "searchSel";
+		}
+		
+		// Highlight the active selector
+		option[curDropIndex].className = "searchSelActive";
+	}
+}
+
+// Prevent Form Submission when in a Search Box
+window.onload = function()
+{
+	var frm = document.forms;
+	
+	// Assign a function to every form that prevents submission when the active element's class == "searchInput"
+	for (var i = 0; i < frm.length; i++)
+	{
+		frm[i].onkeypress = function(event)
+		{
+			var act = document.activeElement;
+			
+			if(act.className == "searchInput")
+			{
+				return event.keyCode != 13;
+			}
+		}
+	}
+}
+
+
+/*
+	
+	--------------------------------
+	----- HOW TO USE getAjax() -----
+	--------------------------------
+	
+	To properly retrieve an AJAX string, use the following syntax:
+	
+	getAjax("http://example.com", "scriptName", "funcToActivate" "var1=a", "var2=b", ...)
+		
+		- Replace "http://example.com" with the site to connect to, or "" if loading the same site.
+		
+		- "scriptName" is the script you're calling.
+		
+		- "funcToActivate" is the function you're going to activate when the AJAX responds.
+			It will be run with the return value of the ajax call, i.e. funcToActivate(responseText);
+		
+		- Each argument passed to getAjax() after the AJAX DIV will provide additional parameters that
+		  get sent as $_POST values to that page.
+		  
+			^ For example, the script above would pass $_POST['var1'] = "a" and $_POST['var2'] = "b",
+			which can be used to generate data on that page.
+		
+	
+	<< A Simple Example >>
+		
+		var getData = getAjax('http://search.unifaction.com', 'mySearchScript', 'setVal=1', 'anotherVal=2');
+	
+	
+	<< Note about Cross-Origin Policies >>
+	
+		If you want to make a cross-site connection with JavaScript, you'll need to accept CORS at the destination page.
+		
+		This can be done with the following header:
+		
+			header('Access-Control-Allow-Origin: *');
+		
+		This header needs to be applied to the page you're connecting to.
+	
+*/
+
+// This function will retrieve data from an ajax script
+function getAjax(siteURL, scriptName, funcToActivate)
+{
+	var queryString = "";
+	
+	// Add the extra data values to the query string
+	// Each additional argument sent to this function is set up like: value=something
+	// So a full function call would look like this:
+	// getAjax('', 'myAjaxScript', 'mySpecialFunc', 'username=Joe', 'value=something');
+	for(var i = 2; i < arguments.length; i++)
+	{
+		queryString = queryString + "&" + arguments[i];
+	}
+	
+	var gethttp = new XMLHttpRequest();
+	
+	gethttp.onreadystatechange = function()
+	{
+		if(gethttp.readyState == 4 && gethttp.status == 200)
+		{
+			if(funcToActivate)
+			{
+				window[funcToActivate](gethttp.responseText);
+			}
+		}
+	}
+	
+	// Run the Processor
+	gethttp.open("POST", (siteURL ? siteURL : "") + "/ajax/" + scriptName, true);
+	gethttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	gethttp.send(queryString);
+}
+
+/*
+	
+	---------------------------------
+	----- HOW TO USE loadAjax() -----
+	---------------------------------
+	
+	To properly call AJAX in our system, use the following syntax:
+	
+	loadAjax("http://example.com", "scriptName", "ajaxDivID", "var1=a", "var2=b", ...)
+		
+		- Replace "http://example.com" with the site to connect to, or "" if loading the same site.
+		
+		- "scriptName" is the script you're calling.
+		
+		- "ajaxDivID" is the div ID on the page that will be update via AJAX.
+		
+		- Each argument passed to loadAjax() after the AJAX DIV will provide additional parameters that
+		  get sent as $_POST values to that page.
+		  
+			^ For example, the script above would pass $_POST['var1'] = "a" and $_POST['var2'] = "b",
+			which can be used to generate data on that page.
+		
+		- Set the variable "ajaxInsertType" to "after" to load the AJAX content after a div rather than replace it.
+	
+	
+	<< A Simple Example >>
+		
+		<a href="javascript:void(0)" onclick="loadAjax('http://search.unifaction.com', 'checkData', 'ajaxDivID', 'menu=1')">Edit Me</a>
+	
+	
+	<< Activating a function with the AJAX Response >>
+	
+		If you want to activate a function with the AJAX response, you can set the variable "ajaxReturnFunc" to the
+		name of the function you want it to return to. The function has to be set up like this:
+			
+			function myAjaxFunc(ajaxResponse) {}
+			
+		The call will look like this:
+			
+			onclick="ajaxReturnFunc='myAjaxFunc'; loadAjax('', 'ajaxScript', '', 'menu=1')"
+	
+	
+	<< Note about Cross-Origin Policies >>
+	
+		If you want to make a cross-site connection with JavaScript, you'll need to accept CORS at the destination page.
+		
+		This can be done with the following header:
+		
+			header('Access-Control-Allow-Origin: *');
+		
+		This header needs to be applied to the page you're connecting to.
+	
+*/
+
+// This function will load the retrieved data into the "AJAX DIV".
+function loadAjax(siteURL, scriptName, ajaxDivID)
+{
+	var queryString = "";
+	
+	// Add the extra data values to the query string
+	// Each additional argument sent to this function is set up like: value=something
+	// So a full function call would look like this:
+	// loadAjax('', 'ajaxCall', 'myDivID', 'username=Joe', 'value=something');
+	for(var i = 2; i < arguments.length; i++)
+	{
+		queryString = queryString + "&" + arguments[i];
+	}
+	
+	processAjax(siteURL, scriptName, ajaxDivID, queryString);
+}
+
+// This is the AJAX Processor
+// Don't call this directly. Use loadAjax() or processForm().
+function processAjax(siteURL, scriptName, ajaxDivID, queryString)
+{
+	var xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange = function()
+	{
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+		{
+			// If we're requesting the AJAX call to return to a specific function
+			if(ajaxReturnFunc != "")
+			{
+				if(typeof window[ajaxReturnFunc] == "function")
+				{
+					window[ajaxReturnFunc](xmlhttp.responseText);
+				}
+				
+				ajaxReturnFunc = "";
+			}
+			
+			// Standard AJAX calls return content to a specific DIV
+			else if(ajaxDivID != "")
+			{
+				if(ajaxInsertType == "after")
+				{
+					// Append the AJAX result into the page
+					document.getElementById(ajaxDivID).insertAdjacentHTML('beforeend', xmlhttp.responseText);
+					ajaxInsertType = "";
+				}
+				else
+				{
+					// Replace the AJAX result into the designated DIV
+					document.getElementById(ajaxDivID).innerHTML = xmlhttp.responseText;
+				}
+			}
+		}
+	}
+	
+	// Run the Processor
+	xmlhttp.open("POST", (siteURL ? siteURL : "") + "/ajax/" + scriptName, true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(queryString);
+}
+
+/*
+	
+	----------------------------------
+	----- HOW TO USE THIS SCRIPT -----
+	----------------------------------
+	The script is used to process forms through AJAX.
+	
+	To be called properly, the form must be set up like this:
+	
+	<form id="formID" name="someName"
+			action="/page/to/load'
+			onsubmit="return processForm('formID', 'fileToLoad', 'divToAlter')">
+			
+		<!-- Form Content Goes Here -->
+	</form>
+	
+	This script represses the standard form behavior (since that normally forces a refresh).
+	It does this because we don't want to reload the entire page - we only want to reload
+	the AJAX DIV on THIS page.
+	
+*/
+
+// Process Form
+function processForm(formID, pageName, ajaxDivID)
+{
+	/* do what you want with the form */
+	var form = document.getElementById(formID);
+	var elements = form.elements;
+	var queryString = "";
+	
+	for(var i = 0; i < elements.length; i++)
+	{
+		if(typeof elements[i] != 'undefined' && typeof elements[i].name != 'undefined' && typeof elements[i].value != 'undefined')
+		{
+			// Prepare Element Name
+			var elemName = elements[i].name;
+			
+			// Special Checks for Checkboxes
+			if(elements[i].type == "checkbox")
+			{
+				if(elements[i].checked == true)
+				{
+					queryString = queryString + "&" + elemName + "=on";
+				}
+			}
+			else
+			{
+				var elemValue = encodeURIComponent(elements[i].value); // works
+				
+				queryString = queryString + "&" + elemName + "=" + elemValue;
+			}
+		}
+	}
+	
+	// Send the Form Data through the ajax processing script:
+	processAjax(pageName, ajaxDivID, queryString);
+	
+	// You must return false to prevent the default form behavior
+	return false;
+}
+
+
+
+/*
+	
+	[[ How to use this auto-scroll system ]]
+	
+	Choose an element that you want to have automatically populate with new content as you continue scrolling down. This system will now call post requests from a URL that you designate, and populate the element with new content.
+	
+	To activate this functionality, you will need to set the following values:
+	
+		<script>
+			urlToLoad = "/ajax/example-autoloader";
+			elementIDToAutoScroll = "my-autoloader-div";
+			startPos = 0;
+			entriesToReturn = 10;
+			maxEntriesAllowed = 100;
+			waitDuration = 1200;
+			appendURL = "&example=1&b=2";
+		</script>
+	
+	Then you'll need to create the div that has the same ID as "elementIDToAutoScroll"
+	
+		<div id="my-autoloader-div">{{ Data will load here }}</div>
+		
+	To run functionality after content loads from the auto-scroll, create this function:
+		
+		function afterAutoScroll() {
+			// This will run after the scroll has loaded content
+		}
+	
+	On the URL that you're calling from, you'll need to use the following parameters:
+	
+		$_GET['startPos']		// The starting position to call from.
+		$_GET['entries']		// The number of rows (or entries) to return.
+		$_GET['custom']			// Any custom data that was sent to this page.
+		
+	The content will be formatted however the URL outputs the information.
+	
+*/
+
+// Values you must set
+var urlToLoad = "";				// The URL that you're going to pull from
+var elementIDToAutoScroll = "";	// The ID of the element to auto-scroll (generally a "div" element)
+var startPos = 0;				// The starting position for auto generation
+var entriesToReturn = 10;		// The number of entries to pull each cycle
+var maxEntriesAllowed = 100;	// The maximum number of entries to pull total
+var waitDuration = 1200;		// The amount of time (in microseconds) to pause between auto-loads
+var appendURL = "&example=1";	// Custom URL content to send to the auto-load page (e.g. "&custom=value&a=1")
+
+// Values that the system uses
+var loadagain = true;
+
+// The scrolling event that triggers auto-scrolling
+window.onscroll = function(event)
+{
+	// If we haven't designated an element to auto-scroll, don't run any effects
+	if(!elementIDToAutoScroll)
+	{
+		return false;
+	}
+	
+	// Make sure we haven't exhausted all of the entries that are allowed at maximum
+	if(startPos >= maxEntriesAllowed)
+	{
+		return false;
+	}
+	
+	// Get the element that is designated to be auto-scrolled
+	var getElement = document.getElementById(elementIDToAutoScroll);
+	
+	var pixelsFromBottom = getPixelOffsetFromBottomOfElement(getElement);
+	
+	if(pixelsFromBottom <= 650 && loadagain == true)
+	{
+		// Make sure we don't load too much too quickly
+		// Allow more content to load after the designated wait duration
+		loadagain = false;
+		setTimeout(function() { loadagain = true; }, waitDuration);
+		
+		// Run the auto-scroll functionality
+		runAutoScroll();
+	}
+}
+
+function runAutoScroll()
+{
+	var xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange = function()
+	{
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
+		{
+			// If there was nothing loaded, stop running this setup
+			if(xmlhttp.responseText == "")
+			{
+				loadagain = false;
+				maxEntriesAllowed = startPos;
+			}
+			
+			// Run the auto-scroll insert
+			document.getElementById(elementIDToAutoScroll).insertAdjacentHTML('beforeend', xmlhttp.responseText);
+			
+			// If there is a follow-up function assigned, run it
+			if(typeof afterAutoScroll == 'function')
+			{ 
+				afterAutoScroll(); 
+			}
+		}
+	}
+	
+	xmlhttp.open("POST", urlToLoad + "?startPos=" + startPos + "&entries=" + entriesToReturn + appendURL, true);
+	xmlhttp.send();
+	
+	// Update the starting position for the next loop
+	startPos += entriesToReturn;
+}
+
+/**********************************
+****** Auto-Scroll Detection ******
+***********************************
+
+This set of functions are used when detecting page positions for auto-scrolling. They provide mathematical checks to confirm whether or not the page has scrolled enough to warrant loading more data.
+
+*/
+
+function getPercentOfPageScrolled()
+{
+	return Math.floor(100 * (window.pageYOffset / (document.body.offsetHeight - window.innerHeight)));
+}
+
+function getPercentOfElementScrolled(element)
+{
+	var elTop = element.offsetTop;			// Distance element is from the top of the page
+	var elHeight = element.offsetHeight;	// Height of the element
+	
+	var winTop = window.pageYOffset;		// Distance of window scroll to top of the page
+	var winHeight = window.innerHeight;		// Height of the window's viewport
+	
+	var elementPercent = (winTop - elTop + winHeight) / elHeight;
+	elementPercent = ((10000 * elementPercent) / 100).toFixed(2);
+	
+	elementPercent = Math.min(Math.max(elementPercent, 0), 100);
+	
+	return elementPercent;
+}
+
+function getPixelsOfElementScrolled(element)
+{
+	var elTop = element.offsetTop;			// Distance element is from the top of the page
+	var elHeight = element.offsetHeight;	// Height of the element
+	
+	var winTop = window.pageYOffset;		// Distance of window scroll to top of the page
+	var winHeight = window.innerHeight;		// Height of the window's viewport
+	
+	var pixelsShown = winTop - elTop + winHeight;
+	
+	pixelsShown = Math.min(Math.max(pixelsShown, 0), elHeight);
+	
+	return pixelsShown;
+}
+
+function getPixelOffsetFromBottomOfElement(element)
+{
+	var pixelsFromBottom = element.offsetHeight - getPixelsOfElementScrolled(element);
+	
+	return pixelsFromBottom;
 }
