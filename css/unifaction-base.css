@@ -445,14 +445,14 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 ****** Widget Displays ******
 ****************************/
 
-.widget-wrap { width:100%; padding-bottom:10px; }
-.widget-inner { background-color:white; border:solid 1px #cccccc; padding:10px; }
+.widget-wrap { width:100%; margin-bottom:8px; }
+.widget-inner { background-color:white; border:solid 1px #cccccc; padding:6px; }
 .widget-title { font-weight:bold; font-size:1.1em; padding-bottom:2px; }
 
-.widget-featured { overflow:hidden; }
-.widget-featured-left { float:left; overflow:hidden; width:80px; height:80px; padding-top:4px; }
-.widget-featured-left img { width:100%; }
-.widget-featured-right { margin-left: 94px; padding-top:0px; font-size:0.9em; }
+.widget-featured { margin-top:6px; overflow:hidden; }
+.widget-featured-left { float:left; overflow:hidden; width:80px; }
+.widget-featured-left img { width:72px; }
+.widget-featured-right { margin-left: 78px; padding-top:0px; font-size:0.9em; }
 
 .widget-line a { display:block; color:#16b9b3 !important; padding:4px 8px 4px 8px; overflow:hidden; }
 .widget-line:hover a { color:#012345 !important; }
@@ -558,7 +558,7 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 /* The widget uses these three values as IDs as well. */
 .chat-wrap { background-color:white; padding:0px; margin-bottom:10px; }
 .chat-header { border:solid 1px #c0c0c0; padding:4px; font-weight:bold; color:#475055 !important; }
-.chat-inner { border-left:solid 1px #c0c0c0; max-height:250px; overflow-y:auto; }
+.chat-inner { border-left:solid 1px #c0c0c0; border-right:solid 1px #c0c0c0; max-height:250px; overflow-y:auto; }
 
 .chat-line { width:100%; font-size:0.9em; }
 .chat-lside { display:table-cell; vertical-align:top; padding:2px 2px 0px 2px; }

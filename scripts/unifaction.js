@@ -1,19 +1,29 @@
 
+/******************************************
+****** Wrappers and Helper Functions ******
+******************************************/
+
 /******************************
 ****** Mobile Navigation ******
 ******************************/
 
+// Toggle the Mobile Menu on / off
 function toggleMenu()
 {
-	var menu = document.getElementById("panel-left");
+	// Get the left panel
+	var menu = getByID("panel-left");
 	
+	// If the panel is visible (displayed), remove it
 	if(menu.style.display == "block")
 	{
 		menu.style.display = "none";
 		
-		var m1 = document.getElementById("uni-modal-mobile");
+		var m1 = getByID("uni-modal-mobile");
+		
 		m1.parentNode.removeChild(m1);
 	}
+	
+	// If the panel is not displayed, display it
 	else
 	{
 		menu.style.position = "absolute";
@@ -540,11 +550,21 @@ function submitChatForm()
 // Add messages to the chat
 function load_chat(response)
 {
+	// Prepare Values
+	var chatInner = document.getElementById("chat-inner");
+	
 	// If there is no response this interval:
 	if(!response)
 	{
 		// If the chat interval is less than 30 seconds long, add 1 tick to the interval
 		if(timers.chat.interval < 120) { timers.chat.interval += 1; }
+		
+		// If there is no content inside the chat box, we need to crate a single entry
+		if(chatInner.innerHTML == "")
+		{
+			chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="http://cdn.test/images/uniavi_sm.png" /></div><div class="chat-rside">Welcome! Be the first to post in this chat!</div></div>');
+		}
+		
 		return;
 	}
 	
@@ -556,8 +576,6 @@ function load_chat(response)
 	}
 	
 	// Prepare Values
-	var chatInner = document.getElementById("chat-inner");
-	
 	var response = JSON.parse(response);
 	var lastTime = response.last_time;
 	var messages = response.messages;
@@ -928,7 +946,7 @@ function searchEngineAjax()
 	// Change the behavior if the first character is different
 	if(query.charAt(0) == "#")
 	{
-		// siteURL = "http://hashtag.unifaction.com";
+		siteURL = "http://hashtag.unifaction.com";
 	}
 	else if(query.charAt(0) == "@")
 	{

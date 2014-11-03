@@ -3,10 +3,19 @@
 ****** Page Layout ******
 ************************/
 
+#core-nav { background-color:#77b5db; }
+#core-nav a, #core-nav span { color:#2c7099 !important; }
+#core-nav a:hover { background-color:#97d5fb; }
+
+.core-link { border-bottom:solid 1px #2C7099; }
+
+#container { background-color:#d9e8f7; }
+#content a { color: #686868 !important; }
+
 /*************************
 ****** Forum Styles ******
 *************************/
-.overwrap-box { background-color:#ffffff; border:solid 1px #c0c0c0; border-radius:4px; padding:6px; margin-bottom:7px; }
+.overwrap-box { background-color:#d5e4ed; border:solid 1px #c0c0c0; border-radius:4px; padding:6px; margin-bottom:7px; }
 .overwrap-line { padding:0px 6px 0px 6px; font-size:1.2em; font-weight:bold; }
 .overwrap-line>div { display:inline-block; vertical-align:top; }
 
@@ -15,7 +24,7 @@
 .overwrap-views { text-align:center; font-size:0.8em; }
 .overwrap-details { font-size:0.8em; }
 
-.inner-box { background-color:#eeeeee; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; }
+.inner-box { background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; }
 .inner-line { height:38px; padding:6px; border-bottom:solid 1px #c0c0c0; }
 .inner-line:hover { background-color:#e0e0e0; }
 .inner-line>div { display:inline-block; vertical-align:middle; border-right:solid 1px #c0c0c0; color:#5d5d5d; overflow:hidden; }
@@ -85,8 +94,9 @@
 /**************************
 ****** Thread Styles ******
 **************************/
-.thread-tline { background-color:rgb(97, 123, 84); border-radius:5px; padding:4px; margin-bottom:7px; color:white; font-weight:bold; overflow:hidden; }
-.thread-tline a { color:white !important; }
+
+.thread-tline { background-color:#77b5db; border-radius:5px; padding:4px; margin-bottom:7px; color:white; font-weight:bold; overflow:hidden; }
+#content .thread-tline a { color:white !important; }
 .thread-tline a:hover { text-decoration:underline !important; }
 
 .thread-page { background-color:rgba(190, 190, 90, 0.6); padding:2px 4px 2px 4px; border-radius:4px; }
@@ -95,44 +105,36 @@
 
 .thread-post { border:solid 1px #c0c0c0; border-radius:5px; background-color:#ffffff; margin-bottom:6px; overflow:hidden; }
 
-/* Standard Avatar Thread */
-.post-left { float:left; padding:8px; border-right:solid 1px #c0c0c0; }
-.post-right { padding:8px 8px 8px 8px; }
+/* Profile Picture Thread */
+.post-left { display:table-cell; vertical-align:top; padding:4px; border-right:solid 1px #c0c0c0; }
+.post-right { display:table-cell; vertical-align:top; padding:4px; }
 
-.pl-left { float:left; width:74px; }
-.pl-right a { color:#5d5d5d !important; }
-.pl-right a:hover { color:#56ccc8 !important; }
+.post-status a { color:#5d5d5d !important; }
+.post-status a:hover { color:#56ccc8 !important; }
 
-.plr-top { font-weight:bold; overflow:hidden; }
-.plr-bottom { margin-top:4px; font-size:0.8em; overflow:hidden; }
-
-/* Avatar Thread */
-.post-avatar { float:left; padding:8px; border-right:solid 1px #c0c0c0; max-width:25%; }
-.post-avatar img { width:100%; }
-
-.post-avatar-bottom a { color:#5d5d5d !important; }
-.post-avatar-bottom a:hover { color:#56ccc8 !important; }
+.post-status-top { font-weight:bold; overflow:hidden; }
+.post-status-bottom { margin-top:4px; font-size:0.8em; overflow:hidden; }
 
 /* Responsive Threads */
-@media (min-width:1000px) {
-	.post-left { width:215px; }
-	.post-right { margin-left:27%; }
+@media (min-width:400px) and (max-width:799px) {
+	.post-avatar-wrap img { width:128px; }
+	.post-img-wrap img { width:64px; }
+	.post-status { display:none; }
 }
 
-@media (min-width:0px) and (max-width:999px) {
-	.post-left { width:64px; }
-	.post-right { margin-left:28%; }
-	.pl-right { display:none; }
+@media (min-width:0px) and (max-width:399px) {
+	.post-avatar-wrap img { width:86px; }
+	.post-img-wrap img { width:64px; }
+	.post-status { display:none; }
 }
-
 
 /************************
 ****** User Colors ******
 ************************/
 
-.user-role-admin { color:red; font-weight:bold; }
-.user-role-staff { font-weight:bold; }
-.user-role-artist { color:purple; font-weight:bold; }
-.user-role-mod { color:orange; font-weight:bold; }
-.user-role-programmer { color:green; font-weight:bold; }
+.role-admin { color:red; font-weight:bold; }
+.role-staff { font-weight:bold; }
+.role-artist { color:purple; font-weight:bold; }
+.role-mod { color:orange; font-weight:bold; }
+.role-programmer { color:green; font-weight:bold; }
 
