@@ -11,14 +11,14 @@
 function toggleMenu()
 {
 	// Get the left panel
-	var menu = getByID("panel-left");
+	var menu = document.getElementById("panel-left");
 	
 	// If the panel is visible (displayed), remove it
 	if(menu.style.display == "block")
 	{
 		menu.style.display = "none";
 		
-		var m1 = getByID("uni-modal-mobile");
+		var m1 = document.getElementById("uni-modal-mobile");
 		
 		m1.parentNode.removeChild(m1);
 	}
@@ -538,12 +538,15 @@ function submitChatForm()
 {
 	// Prepare Values
 	var message = document.getElementById("chat_message").value;
+	var isPrivate = document.getElementById("chat_private");
+	
+	isPrivate = (isPrivate ? true : false);
 	
 	// Clean the chat box, but refocus there
 	document.getElementById("chat_message").value = "";
 	
 	// Run the chat update with a designated message
-	runChatUpdate(message);
+	runChatUpdate(message, isPrivate);
 	return false;
 }
 
@@ -610,8 +613,12 @@ function runChatUpdate(message)
 	
 	// Prepare Values
 	channel = channel.value;
+	
 	var lastpost = document.getElementById("chat_time").value;
 	var username = document.getElementById("chat_username");
+	var isPrivate = document.getElementById("chat_private");
+	
+	isPrivate = (isPrivate ? true : false);
 	
 	// If the user is not logged in, set appropriate values
 	if(!username)
@@ -630,7 +637,7 @@ function runChatUpdate(message)
 	if(!chatServID) { return; }
 	
 	// Call the AJAX file that is going to add your values
-	getAjax("http://chat" + chatServID + ".sync.test", "getChatData", "load_chat", "lastpost=" + lastpost, "username=" + username, "message=" + message, "enc=" + JSEncrypt, "channel=" + channel);
+	getAjax("http://" + (isPrivate ? "p" : "") + "chat" + chatServID + ".sync.test", (isPrivate ? "getPrivateChatData" : "getChatData"), "load_chat", "lastpost=" + lastpost, "username=" + username, "message=" + message, "enc=" + JSEncrypt, "channel=" + channel);
 }
 
 /***********************

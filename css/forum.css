@@ -10,7 +10,8 @@
 .core-link { border-bottom:solid 1px #2C7099; }
 
 #container { background-color:#d9e8f7; }
-#content a { color: #686868 !important; }
+#content a { color: #686868; }
+#content a:visited { color: #686868; }
 
 /*************************
 ****** Forum Styles ******
@@ -24,17 +25,16 @@
 .overwrap-views { text-align:center; font-size:0.8em; }
 .overwrap-details { font-size:0.8em; }
 
-.inner-box { background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; }
-.inner-line { height:38px; padding:6px; border-bottom:solid 1px #c0c0c0; }
-.inner-line:hover { background-color:#e0e0e0; }
-.inner-line>div { display:inline-block; vertical-align:middle; border-right:solid 1px #c0c0c0; color:#5d5d5d; overflow:hidden; }
+.inner-box { display:table; border-collapse:collapse; background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; width:100%; }
+.inner-line { display:table-row; border-bottom:solid 1px #c0c0c0; height:50px; }
+.inner-line a:hover { color:#16B9B3 !important; }
 
-.inner-name { white-space:nowrap; overflow:hidden; font-weight:bold; color:#56ccc8 !important; }
-.inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; overflow:hidden; white-space:nowrap; }
+.inner-name { display:table-cell; vertical-align:top; border-right:solid 1px #c0c0c0; font-weight:bold; color:#56ccc8 !important; padding:5px; }
+.inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; }
 
-.inner-posts { text-align:center; line-height:38px; }
-.inner-views { text-align:center; line-height:38px; }
-.inner-details { font-size:0.8em; border-right:none !important; }
+.inner-posts { display:table-cell; vertical-align:middle; text-align:center; border-right:solid 1px #c0c0c0; }
+.inner-views { display:table-cell; vertical-align:middle; text-align:center; border-right:solid 1px #c0c0c0; }
+.inner-details { display:table-cell; padding:4px; font-size:0.8em; }
 
 .inner-paginate { font-size:0.8em; color:white; }
 .inner-paginate>a { color:white !important; }
@@ -43,35 +43,40 @@
 
 .sticky-thread { background-color:#FFFFDD; }
 
+.sub-forum-list { font-size:0.9em; margin-top:4px; }
+.sub-forum-list>a { margin-right:8px; white-space:nowrap; }
+
+.new-sub { color: #CD853F; }
+
 @media (min-width:1000px) {
-	.overwrap-name { width:45% }
-	.overwrap-posts { width:12%; }
-	.overwrap-views { width:12%; }
-	.overwrap-details { width:27%; }
+	.overwrap-name { width:51% }
+	.overwrap-posts { width:9%; }
+	.overwrap-views { width:11%; }
+	.overwrap-details { width:24%; }
 	
-	.inner-name { width:45%; }
-	.inner-posts { width:12%; }
-	.inner-views { width:12%; }
+	.inner-name { width:49%; }
+	.inner-posts { width:10%; }
+	.inner-views { width:10%; }
 	.inner-details { width:27%; }
 }
 
 @media (min-width:700px) and (max-width:999px) {
-	.overwrap-name { width:52% }
-	.overwrap-posts { width:15%; }
+	.overwrap-name { width:56% }
+	.overwrap-posts { width:14%; }
 	.overwrap-views { display:none !important; }
-	.overwrap-details { width:29%; }
+	.overwrap-details { width:24%; }
 	
-	.inner-name { width:52%; }
-	.inner-posts { width:15%; }
+	.inner-name { width:57%; }
+	.inner-posts { width:14%; }
 	.inner-views { display:none !important; }
 	.inner-details { width:29%; }
 }
 
 @media (min-width:550px) and (max-width:699px) {
-	.overwrap-name { width:62% }
+	.overwrap-name { width:66% }
 	.overwrap-posts { display:none !important; }
 	.overwrap-views { display:none !important; }
-	.overwrap-details { width:34%; }
+	.overwrap-details { width:30%; }
 	
 	.inner-name { width:62%; }
 	.inner-posts { display:none !important; }
@@ -107,7 +112,7 @@
 
 /* Profile Picture Thread */
 .post-left { display:table-cell; vertical-align:top; padding:4px; border-right:solid 1px #c0c0c0; }
-.post-right { display:table-cell; vertical-align:top; padding:4px; }
+.post-right { display:table-cell; vertical-align:top; padding:4px; width:100%; }
 
 .post-status a { color:#5d5d5d !important; }
 .post-status a:hover { color:#56ccc8 !important; }
@@ -127,6 +132,12 @@
 	.post-img-wrap img { width:64px; }
 	.post-status { display:none; }
 }
+
+/**********************
+****** Signature ******
+**********************/
+
+.thread-signature { width:100%; margin-top: 18px; border-top:solid 1px #c0c0c0; max-height:280px; overflow-y:auto; }
 
 /************************
 ****** User Colors ******
