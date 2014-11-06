@@ -237,7 +237,7 @@ function toggleNotifications()
 		return;
 	}
 	
-	getAjax("http://notifications.sync.test", "viewNotifications", "resetNotifyCount", "username=" + JSUser, "enc=" + JSEncrypt);
+	getAjax("http://notifications.sync.unifaction.com", "viewNotifications", "resetNotifyCount", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
 function resetNotifyCount()
@@ -247,7 +247,7 @@ function resetNotifyCount()
 
 function runNotifications()
 {
-	getAjax("http://notifications.sync.test", "getMyNotifications", "sync_notifications", "username=" + JSUser, "enc=" + JSEncrypt);
+	getAjax("http://notifications.sync.unifaction.com", "getMyNotifications", "sync_notifications", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
 function sync_notifications(response)
@@ -333,7 +333,7 @@ function toggleFriends()
 
 function runFriendList()
 {
-	getAjax("http://friends.sync.test", "getMyFriends", "sync_friends", "username=" + JSUser, "enc=" + JSEncrypt);
+	getAjax("http://friends.sync.unifaction.com", "getMyFriends", "sync_friends", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
 function sync_friends(response)
@@ -428,7 +428,7 @@ function toggleChat(toUser)
 
 function runUserChat()
 {
-	getAjax("http://messages.sync.test", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime);
+	getAjax("http://messages.sync.unifaction.com", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime);
 }
 
 function postUserChat(toUser)
@@ -441,7 +441,7 @@ function postUserChat(toUser)
 	if(!message) { return; }
 	
 	// Post your chat to the chat system
-	getAjax("http://messages.sync.test", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime, "toUser=" + toUser, "message=" + message);
+	getAjax("http://messages.sync.unifaction.com", "getMessages", "sync_chats", "username=" + JSUser, "enc=" + JSEncrypt, "time=" + JSChatTime, "toUser=" + toUser, "message=" + message);
 	
 	// Clean the chat input
 	chatInput.value = "";
@@ -565,7 +565,7 @@ function load_chat(response)
 		// If there is no content inside the chat box, we need to crate a single entry
 		if(chatInner.innerHTML == "")
 		{
-			chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="http://cdn.test/images/uniavi_sm.png" /></div><div class="chat-rside">Welcome! Be the first to post in this chat!</div></div>');
+			chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="http://cdn.unifaction.com/images/uniavi_sm.png" /></div><div class="chat-rside">Welcome! Be the first to post in this chat!</div></div>');
 		}
 		
 		return;
@@ -637,7 +637,7 @@ function runChatUpdate(message)
 	if(!chatServID) { return; }
 	
 	// Call the AJAX file that is going to add your values
-	getAjax("http://" + (isPrivate ? "p" : "") + "chat" + chatServID + ".sync.test", (isPrivate ? "getPrivateChatData" : "getChatData"), "load_chat", "lastpost=" + lastpost, "username=" + username, "message=" + message, "enc=" + JSEncrypt, "channel=" + channel);
+	getAjax("http://" + (isPrivate ? "p" : "") + "chat" + chatServID + ".sync.unifaction.com", (isPrivate ? "getPrivateChatData" : "getChatData"), "load_chat", "lastpost=" + lastpost, "username=" + username, "message=" + message, "enc=" + JSEncrypt, "channel=" + channel);
 }
 
 /***********************
