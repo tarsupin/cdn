@@ -329,6 +329,17 @@ function toggleFriends()
 		
 		return;
 	}
+	
+	// Make sure there is a default when you're logged in
+	var friendbox = document.getElementById("friend-box");
+	
+	if(!friendbox.innerHTML)
+	{
+		// Update the contents of the friends box
+		document.getElementById("friend-box").innerHTML = '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div><div style="padding:4px; color:#1f6f6d !important;">All off your friends are currently offline.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
+		
+		return;
+	}
 }
 
 function runFriendList()
