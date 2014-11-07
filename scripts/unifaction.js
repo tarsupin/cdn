@@ -325,7 +325,7 @@ function toggleFriends()
 	if(typeof(JSUser) == "undefined")
 	{
 		// Update the contents of the friends box
-		document.getElementById("friend-box").innerHTML = '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div><div style="padding:4px; color:#1f6f6d !important;">Log in to see which of your friends are online.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Join UniFaction <span class="icon-arrow-right"></span></a></div>';
+		document.getElementById("friend-box").innerHTML = '<div class="friend-header">Friends Online</div><div class="friend-center">Log in to see which of your friends are online.</div><div class="friend-bottom"><a href="http://unifaction.social/friends">Join UniFaction <span class="icon-arrow-right"></span></a></div>';
 		
 		return;
 	}
@@ -336,7 +336,7 @@ function toggleFriends()
 	if(!friendbox.innerHTML)
 	{
 		// Update the contents of the friends box
-		document.getElementById("friend-box").innerHTML = '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div><div style="padding:4px; color:#1f6f6d !important;">All off your friends are currently offline.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
+		document.getElementById("friend-box").innerHTML = '<div class="friend-header">Friends Online</div><div class="friend-center">All off your friends are currently offline.</div><div class="friend-bottom"><a href="http://unifaction.social/friends">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
 		
 		return;
 	}
@@ -349,6 +349,7 @@ function runFriendList()
 
 function sync_friends(response)
 {
+	console.log(response);
 	// If there is no response this interval:
 	if(!response)
 	{
@@ -373,12 +374,12 @@ function sync_friends(response)
 	
 	var len = friendData.length;
 	
-	prepHTML += '<div style="border-bottom: solid 1px #1F6F6D; padding:4px; font-weight:bold; color:#1f6f6d !important;">Friends Online</div>';
+	prepHTML += '<div class="friend-header">Friends Online</div>';
 	
 	// If you have no friends online, announce it
 	if(len == 0)
 	{
-		prepHTML += '<div style="padding:4px; color:#1f6f6d !important;">All of your friends are offline at the moment.</div><div style="font-size:0.9em; padding:6px; text-align:center; border-top:solid 1px #1f6f6d;"><a href="http://unifaction.social/friends" style="color:#1f6f6d !important;">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
+		prepHTML += '<div class="friend-center">All of your friends are offline at the moment.</div><div class="friend-bottom"><a href="http://unifaction.social/friends">Add / Find Friends <span class="icon-arrow-right"></span></a></div>';
 	}
 	
 	// Loop through each of the notifications and prepare the entry
