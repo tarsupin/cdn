@@ -185,7 +185,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 	.core-txt { display:none; font-size:12px; }
 }
 
-#core-nav { position:fixed; left:0px; height:100%; z-index:100; }
+#core-nav { position:fixed; top:60px; left:0px; height:100%; z-index:100; }
 #core-nav:hover { width:155px; }
 #core-nav:hover>#core-list { width:155px; }
 #core-nav:hover>#core-list>.corelink { width:155px; }
@@ -255,7 +255,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 ***********************/
 
 /* Core Panel */
-#panel-core { position:absolute; left:0px; top:60px; }
+#panel-core { position:fixed; left:0px; top:60px; }
 
 #core-uni { height:37px; background-color:#79bbff; border-bottom:solid 1px #2c7099; }
 
