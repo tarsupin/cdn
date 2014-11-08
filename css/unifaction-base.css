@@ -73,7 +73,6 @@ body
 {
 	height:100%;
 	line-height:1.3;
-	background-color:#e8e8e8;
 	margin:0px;
 	font-family:Arial;
 	font-size:16px;
@@ -82,8 +81,8 @@ body
 
 html { height:100%; }
 
-#container { min-height:100%; position:relative; }
-#content-wrap { margin-top:0px; min-height:100%;  }
+#container { height:100%; position:relative; }
+#content-wrap { margin-top:0px; min-height:100%; }
 
 /* Open Main Display */
 #content.content-open { background-color:white; padding:15px; }
@@ -591,6 +590,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 { color:#152840; }
 #content .extralinks a:hover { color:#fb7c7c; }
 
 /* Page Color */
+body { background-color:#d9eaff; }
 #container { background-color:#d9eaff; }
 
 
