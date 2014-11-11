@@ -349,7 +349,6 @@ function runFriendList()
 
 function sync_friends(response)
 {
-	console.log(response);
 	// If there is no response this interval:
 	if(!response)
 	{
@@ -986,6 +985,7 @@ function searchUpdateChecker()
 	{
 		curDropIndex = -1;
 		nextUpdate = 0;
+		
 		loadAjax(g_siteURL, g_scriptName, g_ajaxDivID, "search=" + lastInput);
 		searchActive = false;
 	}
@@ -1252,7 +1252,7 @@ function loadAjax(siteURL, scriptName, ajaxDivID)
 	// Each additional argument sent to this function is set up like: value=something
 	// So a full function call would look like this:
 	// loadAjax('', 'ajaxCall', 'myDivID', 'username=Joe', 'value=something');
-	for(var i = 2; i < arguments.length; i++)
+	for(var i = 3; i < arguments.length; i++)
 	{
 		queryString = queryString + "&" + arguments[i];
 	}

@@ -614,6 +614,9 @@ body { background-color:#d9eaff; }
 
 .core-active { background-color:#97d5fb; }
 
+/* Right Panel */
+#panel-right a, #panel-right a:visited { color:#237eee; }
+#panel-right a:hover { color:#53aefe; }
 
 /* Search Bars */
 .searchHover>ul>li { background-color:#eeeeee; }
