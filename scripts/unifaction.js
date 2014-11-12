@@ -602,7 +602,7 @@ function load_chat(response)
 	// Load each of the new messages into the chat
 	for(var i = 0; i < len; i++)
 	{
-		chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="' + messages[i]["img"] + '" /></div><div class="chat-rside">[' + messages[i]["time"] + '] ' + messages[i]["message"] + '</div></div>');
+		chatInner.insertAdjacentHTML("beforeend", '<div class="chat-line"><div class="chat-lside"><img src="' + messages[i]["img"] + '" /></div><div class="chat-rside"><a href="http://unifaction.social/' + messages[i]["user"] + '">@' + messages[i]["user"] + '</a> ' + messages[i]["message"] + '</div></div>');
 	}
 	
 	chatInner.scrollTop = chatInner.scrollHeight;

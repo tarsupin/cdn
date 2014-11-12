@@ -399,7 +399,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 
 .chat-line { width:100%; font-size:0.9em; }
 .chat-lside { display:table-cell; vertical-align:top; padding:2px 2px 0px 2px; }
-.chat-rside { display:table-cell; vertical-align:middle; padding:0px 2px 2px 4px; }
+.chat-rside { display:table-cell; vertical-align:middle; padding:0px 2px 2px 4px; font-size:0.9em; }
 .chat-lside>img { height:32px; }
 
 .chat-footer input { width:100%; box-sizing:border-box; padding:3px; }

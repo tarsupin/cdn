@@ -136,22 +136,21 @@
 	.post-img-avatar { width:205px; }
 }
 
-@media (min-width:400px) and (max-width:799px) {
-	.post-left { width:64px; }
+@media (min-width:500px) and (max-width:799px) {
+	.post-left { width:128px; }
 	.post-left-avatar { width:128px; }
-	.post-right { margin-left:78px; }
+	.post-right { margin-left:141px; }
 	.post-right-avatar { margin-left:141px; }
-	.post-img { width:64px; }
+	.post-img { width:128px; }
 	.post-img-avatar { width:128px; }
-	.post-status { display:none; }
 }
 
-@media (min-width:0px) and (max-width:399px) {
-	.post-left { width:64px; }
+@media (min-width:0px) and (max-width:499px) {
+	.post-left { width:86px; }
 	.post-left-avatar { width:86px; }
-	.post-right { margin-left:78px; }
+	.post-right { margin-left:99px; }
 	.post-right-avatar { margin-left:99px; }
-	.post-img { width:64px; }
+	.post-img { width:86px; }
 	.post-img-avatar { width:86px; }
 	.post-status { display:none; }
 }
