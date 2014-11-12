@@ -111,11 +111,10 @@
 .thread-tline .thread-page:hover { text-decoration:none !important; background-color:rgba(190, 90, 90, 1); }
 .thread-page.thread-page-active { background-color:rgba(250, 90, 90, 1) !important; }
 
-.thread-post { border:solid 1px #c0c0c0; border-radius:5px; background-color:#ffffff; margin-bottom:6px; overflow:hidden; }
+.thread-post { height:100%; width:100%; overflow:hidden; border:solid 1px #c0c0c0; border-radius:5px; background-color:#ffffff; margin-bottom:6px; }
 
-/* Profile Picture Thread */
-.post-left { display:table-cell; vertical-align:top; padding:4px; border-right:solid 1px #c0c0c0; }
-.post-right { display:table-cell; vertical-align:top; padding:4px; width:100%; }
+/* Profile Picture */
+.post-left, .post-left-avatar { float:left; padding:4px; vertical-align:top; border-right:solid 1px #c0c0c0;}
 
 .post-status a { color:#5d5d5d !important; }
 .post-status a:hover { color:#56ccc8 !important; }
@@ -123,16 +122,37 @@
 .post-status-top { font-weight:bold; overflow:hidden; }
 .post-status-bottom { margin-top:4px; font-size:0.8em; overflow:hidden; }
 
+/* Thread Post */
+.post-right, .post-right-avatar { padding:0px 4px 4px 0px; }
+.post-right img, .post-right-avatar img { max-width:100%; }
+
 /* Responsive Threads */
+@media (min-width:800px) {
+	.post-left { width:128px; }
+	.post-left-avatar { width:205px; }
+	.post-right { margin-left:141px; }
+	.post-right-avatar { margin-left:218px; }
+	.post-img { width:128px; }
+	.post-img-avatar { width:205px; }
+}
+
 @media (min-width:400px) and (max-width:799px) {
-	.post-avatar-wrap img { width:128px; }
-	.post-img-wrap img { width:64px; }
+	.post-left { width:64px; }
+	.post-left-avatar { width:128px; }
+	.post-right { margin-left:78px; }
+	.post-right-avatar { margin-left:141px; }
+	.post-img { width:64px; }
+	.post-img-avatar { width:128px; }
 	.post-status { display:none; }
 }
 
 @media (min-width:0px) and (max-width:399px) {
-	.post-avatar-wrap img { width:86px; }
-	.post-img-wrap img { width:64px; }
+	.post-left { width:64px; }
+	.post-left-avatar { width:86px; }
+	.post-right { margin-left:78px; }
+	.post-right-avatar { margin-left:99px; }
+	.post-img { width:64px; }
+	.post-img-avatar { width:86px; }
 	.post-status { display:none; }
 }
 

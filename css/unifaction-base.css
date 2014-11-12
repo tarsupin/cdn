@@ -598,9 +598,9 @@ body { background-color:#d9eaff; }
 #header-wrap { background-color:#D9E8F7; background-image: url("http://cdn.unifaction.com/images/top-logo.png"); border-bottom:solid 1px #a9b8c7; }
 
 /* Login Menu - User's Icon */
-#login-menu>ul { background-color:#59ABA9; }
-#login-menu ul li a { color:white; }
-#login-menu ul li a:hover { background: #79cBc9; }
+#login-menu>ul { background-color:#79bbff; }
+#login-menu ul li a { color:white; border-bottom: solid 1px #2c7099;  }
+#login-menu ul li a:hover { background: #97d5fb; }
 
 
 /* Core Navigation Panel */
