@@ -776,7 +776,7 @@ function UniMarkupAdvanced(elementID, tagToAdd)
 	var insert = "";
 	
 	// Prepare the necessary prompt
-	if(tagToAdd == "link")
+	if(tagToAdd == "url")
 	{
 		insert = prompt("Enter the URL (web address) to link to:");
 		

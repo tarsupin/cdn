@@ -155,6 +155,9 @@
 	.post-status { display:none; }
 }
 
+/* The Post Option Line */
+.post-options { width:100%; text-align:right; margin-top:4px; }
+
 /**********************
 ****** Signature ******
 **********************/
