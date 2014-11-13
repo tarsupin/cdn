@@ -113,7 +113,7 @@
 
 .thread-post { height:100%; width:100%; overflow:hidden; border:solid 1px #c0c0c0; border-radius:5px; background-color:#ffffff; margin-bottom:6px; }
 
-/* Profile Picture */
+/* Status Bar (Profile Picture, Name, Links) */
 .post-left, .post-left-avatar { float:left; padding:4px; vertical-align:top; border-right:solid 1px #c0c0c0;}
 
 .post-status a { color:#5d5d5d !important; }
@@ -121,6 +121,9 @@
 
 .post-status-top { font-weight:bold; overflow:hidden; }
 .post-status-bottom { margin-top:4px; font-size:0.8em; overflow:hidden; }
+
+.post-like-row { margin-top:2px; font-size:0.9em; }
+.post-like-row img { vertical-align:text-bottom; }
 
 /* Thread Post */
 .post-right, .post-right-avatar { padding:0px 4px 4px 0px; }

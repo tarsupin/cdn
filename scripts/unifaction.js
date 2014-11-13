@@ -112,7 +112,7 @@ document.onreadystatechange = function()
 			if(wPanel.offsetParent !== null)
 			{
 				// Widgets aren't essential. Only show if the load time was fast.
-				if(loadTime < 1500)
+				if(loadTime < 3500)
 				{
 					ajaxInsertType = "after";
 					loadAjax("", "widget-panel", "panel-right", "activeHashtag=" + activeHashtag);
@@ -123,7 +123,7 @@ document.onreadystatechange = function()
 			else if(wPanel.offsetParent !== null)
 			{
 				// Widgets aren't essential. Only show if the load time was fast.
-				if(loadTime < 1500)
+				if(loadTime < 3500)
 				{
 					ajaxInsertType = "after";
 					loadAjax("", "widget-panel", "panel-left", "activeHashtag=" + activeHashtag);
@@ -132,7 +132,7 @@ document.onreadystatechange = function()
 		}
 		
 		// Load the notifications (if you're logged in)
-		if(loadTime < 1500)
+		if(loadTime < 3500)
 		{
 			if(typeof(JSUser) == "string")
 			{
@@ -284,7 +284,7 @@ function sync_notifications(response)
 		prepHTML += '<div class="notif-slot"><div class="notif-entry"><a href="' + noteList[i]['url'] + '">' + noteList[i]['message'] + '</a></div></div>';
 	}
 	
-	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="#">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
+	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.cool/my-notifications">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
 	
 	// Update the contents of the notification box
 	notebox.innerHTML = prepHTML;
