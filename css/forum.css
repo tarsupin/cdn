@@ -19,14 +19,17 @@
 /*************************
 ****** Forum Styles ******
 *************************/
+
 .overwrap-box { background-color:#d5e4ed; border:solid 1px #c0c0c0; border-radius:4px; padding:6px; margin-bottom:7px; }
-.overwrap-line { padding:0px 6px 0px 6px; font-size:1.2em; font-weight:bold; }
+.overwrap-module { background-color:#617B54 !important; }
+.overwrap-module>.overwrap-line { color:white !important; }
+.overwrap-line { padding:0px 2px 0px 2px; font-weight:bold; }
 .overwrap-line>div { display:inline-block; vertical-align:top; }
 
-.overwrap-name { }
-.overwrap-posts { text-align:center; font-size:0.8em; }
-.overwrap-views { text-align:center; font-size:0.8em; }
-.overwrap-details { font-size:0.8em; }
+.overwrap-name { font-size:1.2em; }
+.overwrap-posts { text-align:center;}
+.overwrap-views { text-align:center; }
+.overwrap-details { }
 
 .inner-box { display:table; border-collapse:collapse; background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; width:100%; }
 .inner-line { display:table-row; border-bottom:solid 1px #c0c0c0; height:50px; }
@@ -63,7 +66,7 @@
 	.inner-details { width:27%; }
 }
 
-@media (min-width:700px) and (max-width:999px) {
+@media (min-width:800px) and (max-width:999px) {
 	.overwrap-name { width:56% }
 	.overwrap-posts { width:14%; }
 	.overwrap-views { display:none !important; }
@@ -75,7 +78,7 @@
 	.inner-details { width:29%; }
 }
 
-@media (min-width:550px) and (max-width:699px) {
+@media (min-width:650px) and (max-width:799px) {
 	.overwrap-name { width:66% }
 	.overwrap-posts { display:none !important; }
 	.overwrap-views { display:none !important; }
@@ -87,7 +90,7 @@
 	.inner-details { width:34%; }
 }
 
-@media (max-width:549px) {
+@media (max-width:649px) {
 	.overwrap-name { width:100% }
 	.overwrap-posts { display:none !important; }
 	.overwrap-views { display:none !important; }
@@ -120,9 +123,11 @@
 .post-status a:hover { color:#56ccc8 !important; }
 
 .post-status-top { font-weight:bold; overflow:hidden; }
-.post-status-bottom { margin-top:4px; font-size:0.8em; overflow:hidden; }
+.post-status-bottom { margin-top:4px; margin-bottom:8px; font-size:0.8em; overflow:hidden; }
 
-.post-like-row { margin-top:2px; font-size:0.9em; }
+.post-count-row { margin-top:2px; font-size:0.85em; }
+
+.post-like-row { margin-top:2px; font-size:0.85em; }
 .post-like-row img { vertical-align:text-bottom; }
 
 /* Thread Post */

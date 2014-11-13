@@ -395,7 +395,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 /* The widget uses these three values as IDs as well. */
 .chat-wrap { padding:0px; margin-bottom:10px; }
 .chat-header { padding:4px; font-weight:bold; }
-.chat-inner { max-height:250px; overflow-y:auto; }
+.chat-inner { max-height:250px; overflow-y:auto; overflow-x:hidden; }
 
 .chat-line { width:100%; font-size:0.9em; }
 .chat-lside { display:table-cell; vertical-align:top; padding:2px 2px 0px 2px; }
