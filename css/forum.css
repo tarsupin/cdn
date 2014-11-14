@@ -13,9 +13,6 @@
 #container { background-color:#d9e8f7; }
 */
 
-#content a { color: #686868; }
-#content a:visited { color: #686868; }
-
 /*************************
 ****** Forum Styles ******
 *************************/
@@ -33,7 +30,8 @@
 
 .inner-box { display:table; border-collapse:collapse; background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; width:100%; }
 .inner-line { display:table-row; border-bottom:solid 1px #c0c0c0; height:50px; }
-.inner-line a:hover { color:#16B9B3 !important; }
+.inner-line a, .inner-line a:visited { color:#686868 !important; }
+.inner-line a:hover { color:#53aefe !important; }
 
 .inner-name { display:table-cell; vertical-align:top; border-right:solid 1px #c0c0c0; font-weight:bold; color:#56ccc8 !important; padding:5px; }
 .inner-desc { font-weight:normal; font-size:0.8em; color:#5d5d5d; }
@@ -41,9 +39,10 @@
 .inner-posts { display:table-cell; vertical-align:middle; text-align:center; border-right:solid 1px #c0c0c0; }
 .inner-views { display:table-cell; vertical-align:middle; text-align:center; border-right:solid 1px #c0c0c0; }
 .inner-details { display:table-cell; padding:4px; font-size:0.8em; }
+.inner-details>a { font-weight:bold; }
 
 .inner-paginate { font-size:0.8em; color:white; }
-.inner-paginate>a { color:white !important; }
+.inner-paginate>a, .inner-paginate>a:visited { color:white !important; }
 .inner-paginate>a:hover>span { background-color:#cc4040; }
 .inner-paginate>a>span { padding:0 4px 0 4px; background-color:#ee6060; border-radius:3px; }
 
@@ -120,7 +119,7 @@
 .post-left, .post-left-avatar { float:left; padding:4px; vertical-align:top; border-right:solid 1px #c0c0c0;}
 
 .post-status a { color:#5d5d5d !important; }
-.post-status a:hover { color:#56ccc8 !important; }
+.post-status a:hover { color:#53aefe !important; }
 
 .post-status-top { font-weight:bold; overflow:hidden; }
 .post-status-bottom { margin-top:4px; margin-bottom:8px; font-size:0.8em; overflow:hidden; }
@@ -170,7 +169,7 @@
 ****** Signature ******
 **********************/
 
-.thread-signature { width:100%; margin-top: 18px; border-top:solid 1px #c0c0c0; max-height:280px; overflow-y:auto; }
+.thread-signature { width:100%; margin-top: 18px; border-top:solid 1px #c0c0c0; max-height:300px; overflow-y:hidden; }
 
 /************************
 ****** User Colors ******
