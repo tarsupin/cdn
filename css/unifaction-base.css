@@ -325,7 +325,8 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 #footer-left { display:none; position:absolute; left:0px; padding:0; margin:0; }
 #footer-right { position:absolute; bottom:0px; right:0px; height:100%; }
 
-.ftbutton>a { display:inline-block; line-height:35px; font-size:20px; padding:0 6px 0 6px; }
+#ftbutton { padding:0 4px 0 2px; }
+#ftbutton>a { display:inline-block; line-height:35px; font-size:20px; padding:0 3px 0 3px; }
 .foot-icon { font-size:22px; vertical-align:-10%; }
 
 
@@ -386,6 +387,21 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 
 .notif-more { width:100%; height:35px; text-align:right; }
 .notif-more-inner { padding:8px 6px 0 0; }
+
+
+/*****************************
+****** Personal Display ******
+*****************************/
+
+#myDisp-wrap { font-size:0.9em; max-height:350px; overflow-x:hidden; background-color:#79BBFF; }
+#myDisp-wrap a { padding:1px 4px 1px 4px; border-radius:4px; color:#035ece; background-color:#97D5FB; line-height:1.6em;; }
+#myDisp-wrap a:hover { color:#2C7099; background-color:#A7E5FF; }
+.myDisp-head { border-bottom:solid 1px #505050; padding:2px; font-weight:bold; }
+.myDisp-content { padding:2px; margin-bottom:8px; }
+#myDisp-foot { display:table; border-top:solid 1px #505050; width:100%; }
+#myDisp-foot a { display:block; }
+#myDisp-view { display:table-cell; width:50%; text-align:center; border-right:solid 1px #505050; }
+#myDisp-edit { display:table-cell; width:50%; text-align:center; }
 
 
 /*************************
@@ -702,7 +718,7 @@ body { background-color:#d9eaff; }
 #friend-button { color:#c0c0c0; }
 #notif-button { color:#c0c0c0; }
 
-.ftbutton { border-left: solid 1px #aaaaaa; }
+#ftbutton { border-left: solid 1px #aaaaaa; }
 
 /* Mobile Version of Footer */
 #footer-left>li { color:#475055; }
@@ -730,6 +746,10 @@ body { background-color:#d9eaff; }
 .notif-slot:hover { background-color:#79bbff; }
 .notif-entry>a { color:#2c7099 !important; }
 .notif-more-inner>a { color:#2c7099 !important; }
+
+/* Personal Display */
+.personal-more>a { color:#2c7099 !important; }
+.personal-more-inner>a { color:#2c7099 !important; }
 
 /* Chat Display */
 .chat-wrap { background-color:white; }

@@ -540,6 +540,76 @@ function sync_chats(response)
 }
 
 
+/*****************************
+****** Personal Display ******
+*****************************/
+
+function toggleMyDisplay()
+{
+	toggleDisplay('myDisplay-box');
+	
+	// Run special display for guests
+	if(typeof(JSUser) == "undefined")
+	{
+		// Update the contents of the notifications box
+		document.getElementById("myDisplay-box").innerHTML = '<div class="notif-slot"><div class="notif-entry"><a href="http://unifaction.community">Check out UniFaction\'s Communities!</a></div></div><div class="notif-slot"><div class="notif-entry"><a href="http://unifaction.com/discover">Discover what UniFaction has to offer you!</a></div></div><div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.com/register">Join UniFaction <span class="icon-arrow-right"></span></a></div></div>';
+		
+		return;
+	}
+	
+	getAjax("http://karma.test", "getMyDisplay", "runMyDisplay", "username=" + JSUser, "enc=" + JSEncrypt);
+}
+
+function runMyDisplay(response)
+{
+	// If there is no response:
+	if(!response)
+	{
+		return;
+	}
+	
+	// Retrieve the JSON from the AJAX call
+	var dispResponse = JSON.parse(response);
+	
+	// Prepare Values
+	var myDisplayBox = document.getElementById("myDisplay-box");
+	
+	var bookmarks = dispResponse.bookmarks;
+	var Communities = bookmarks.Communities;
+	var Sites = bookmarks.Sites;
+	var Friends = bookmarks.Friends;
+	var Links = bookmarks.Links;
+	
+	var bookmarks = {"Communities":Communities, "Sites":Sites, "Friends":Friends, "Links":Links};
+	
+	var prepHTML = '<div id="myDisp-wrap"><div class="myDisp-head" style="text-align:right;">' + dispResponse.auro + ' Auro</div>';
+	
+	// Loop through each of the bookmark types provided, if any
+	for(var bm in bookmarks)
+	{
+		if(bookmarks[bm])
+		{
+			prepHTML += '<div class="myDisp-head">My ' + bm + '</div><div class="myDisp-content">';
+			
+			for(var chk in bookmarks[bm])
+			{
+				prepHTML += '<a href="' + bookmarks[bm][chk] + '">' + chk + '</a> ';
+			}
+			
+			prepHTML += '</div>';
+		}
+	}
+	
+	// Loop through each of the sites provided, if any
+	prepHTML += '<div id="myDisp-foot"><div id="myDisp-view"><a href="http://karma.unifaction.com/auro-transactions">Auro</a></div><div id="myDisp-edit"><a href="http://karma.unifaction.com/bookmarks">Bookmarks</a></div></div></div>';
+	
+	prepHTML += '</div>';
+	
+	// Update the contents of the notification box
+	myDisplayBox.innerHTML = prepHTML;
+}
+
+
 /**********************************
 ****** Chat System + Widgets ******
 **********************************/
