@@ -557,7 +557,7 @@ function toggleMyDisplay()
 		return;
 	}
 	
-	getAjax("http://karma.test", "getMyDisplay", "runMyDisplay", "username=" + JSUser, "enc=" + JSEncrypt);
+	getAjax("http://karma.unifaction.com", "getMyDisplay", "runMyDisplay", "username=" + JSUser, "enc=" + JSEncrypt);
 }
 
 function runMyDisplay(response)
