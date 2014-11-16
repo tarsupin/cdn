@@ -573,6 +573,8 @@ function runMyDisplay(response)
 	
 	// Prepare Values
 	var myDisplayBox = document.getElementById("myDisplay-box");
+	var currentURL = window.location.protocol + "//" + window.location.hostname;
+	var siteIsBookmarked = false;
 	
 	var bookmarks = dispResponse.bookmarks;
 	var Communities = bookmarks.Communities;
@@ -593,6 +595,8 @@ function runMyDisplay(response)
 			
 			for(var chk in bookmarks[bm])
 			{
+				if(currentURL == bookmarks[bm][chk]) { siteIsBookmarked = true; }
+				
 				prepHTML += '<a href="' + bookmarks[bm][chk] + '">' + chk + '</a> ';
 			}
 			
@@ -601,7 +605,7 @@ function runMyDisplay(response)
 	}
 	
 	// Loop through each of the sites provided, if any
-	prepHTML += '<div id="myDisp-foot"><div id="myDisp-view"><a href="http://karma.unifaction.com/auro-transactions">Auro</a></div><div id="myDisp-edit"><a href="http://karma.unifaction.com/bookmarks">Bookmarks</a></div></div></div>';
+	prepHTML += '<div id="myDisp-foot"><div id="myDisp-view"><a href="http://karma.unifaction.com/auro-transactions">My Auro</a></div><div id="myDisp-edit"><a href="http://karma.unifaction.com/bookmarks">My Bookmarks</a></div></div>' + (siteIsBookmarked ? '' : '<div id="myDisp-foot"><div id="myDisp-view"><a href="/action/Bookmarks/add?return=' + encodeURIComponent(document.URL) + '"><span class="icon-star"></span> Bookmark This Site</a></div></div>') + '</div>';
 	
 	prepHTML += '</div>';
 	
