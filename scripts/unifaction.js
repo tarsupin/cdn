@@ -284,7 +284,7 @@ function sync_notifications(response)
 		prepHTML += '<div class="notif-slot"><div class="notif-entry"><a href="' + noteList[i]['url'] + '">' + noteList[i]['message'] + '</a></div></div>';
 	}
 	
-	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.cool/my-notifications">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
+	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.com/my-notifications">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
 	
 	// Update the contents of the notification box
 	notebox.innerHTML = prepHTML;
