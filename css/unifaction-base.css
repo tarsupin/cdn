@@ -104,10 +104,10 @@ p:last-child { padding:0px; }
 ****** Form Fields ******
 ************************/
 
-.uniform input[type=text] { padding:6px 6px 6px 12px; font-size:16px; border:solid 1px; }
-.uniform input[type=password] { padding:6px 6px 6px 12px; font-size:16px; border:solid 1px; }
-.uniform select { padding:6px 6px 6px 12px; font-size:16px; border:solid 1px; }
-.uniform textarea { padding:6px 6px 6px 12px; font-size:16px; resize:vertical; border:solid 1px; }
+.uniform input[type=text] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
+.uniform input[type=password] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
+.uniform select { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px; }
+.uniform textarea { padding:4px 4px 4px 6px; font-size:16px; resize:vertical; border:solid 1px #bbbbbb; box-sizing:border-box; }
 .uniform input[type=submit] { line-height:22px; vertical-align:middle; padding:8px 13px 8px 13px; border-radius:8px; border:0px; font-size:16px; cursor:pointer; border:solid 1px; }
 
 /************************
@@ -290,7 +290,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 ****** Right Panel ******
 ************************/
 
-#panel-right { width:245px; }
+#panel-right { width:300px; }
 
 /****************************
 ****** Widget Displays ******

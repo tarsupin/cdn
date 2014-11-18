@@ -3,23 +3,23 @@
 ****** Page Layout ******
 ************************/
 
-@media screen and (min-width:1401px) {
-	#content { margin-left:261px; max-width:100%; margin-right:260px; }
+@media screen and (min-width:1259px) {
+	#content { margin-left:226px; max-width:100%; margin-right:307px; }
 }
 
-@media screen and (min-width:1121px) and (max-width:1400px) {
-	#content { margin-left:261px; margin-right:7px; }
+@media screen and (min-width:1121px) and (max-width:1260px) {
+	#content { margin-left:226px; margin-right:4px; }
 }
 
 @media screen and (min-width:501px) and (max-width:1120px) {
-	#content { margin-left:6px; margin-right:7px; }
+	#content { margin-left:4px; margin-right:4px; }
 }
 
 @media screen and (max-width:500px) {
 	#content { margin-left:0px; }
 }
 
-#panel-left { width:245px; padding-bottom:60px; }
+#panel-left { width:215px; padding-bottom:60px; }
 #viewport-wrap { max-width:1450px; margin:0 auto 0 auto; position:relative; padding:0; }
 
 /***********************************************************
@@ -27,9 +27,9 @@
 ************************************************************/ @media screen and (min-width:1521px) {
 
 /* Side Panel */
-#panel { float:left; margin-left:6px; }
+#panel { float:left; margin-left:4px; }
 #panel-core { float:left; width:155px; position:relative; }
-#panel-right { position:absolute; right:7px; }
+#panel-right { position:absolute; right:3px; }
 #panel-right-inner { padding:10px; margin-right:10px; max-width:100%; }
 
 }
@@ -38,9 +38,9 @@
 ****************************************************/ @media screen and (min-width:1401px) and (max-width:1520px) {
 
 /* Side Panel */
-#panel { float:left; margin-left:6px; }
+#panel { float:left; margin-left:4px; }
 #panel-core { float:left; width:55px; position:relative; }
-#panel-right { position:absolute; right:7px; }
+#panel-right { position:absolute; right:3px; }
 #panel-right-inner { padding:10px; margin-right:10px; max-width:100%; }
 
 } /* End of Responsive - Desktop */
@@ -49,7 +49,7 @@
 ***************************************************/ @media screen and (min-width:1121px) and (max-width:1400px) {
 
 /* Side Panel */
-#panel { float:left; margin-left:6px; }
+#panel { float:left; margin-left:4px; }
 #panel-core { float:left; width:55px; position:relative; }
 #panel-right { display:none; }
 
@@ -59,7 +59,7 @@
 *************************************************/ @media screen and (min-width:501px) and (max-width:1120px) {
 
 /* Side Panel */
-#panel { float:left; width:55px; margin-left:6px; }
+#panel { float:left; width:55px; margin-left:4px; }
 #panel-core { }
 #panel-left { display:none; }
 #panel-right { display:none; }
