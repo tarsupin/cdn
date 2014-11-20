@@ -87,6 +87,9 @@ html { height:100%; }
 /* Open Main Display */
 #content.content-open { background-color:white; padding:15px; }
 
+/* Dynamic Content Loader */
+#move-content-wrapper { display:none; }
+
 /****************************
 ****** Text Structures ******
 ****************************/

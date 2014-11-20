@@ -114,12 +114,14 @@ document.onreadystatechange = function()
 				// Widgets aren't essential. Only show if the load time was fast.
 				if(loadTime < 3500)
 				{
+					ajaxReturnFunc = 'moveDynamicContent';
 					ajaxInsertType = "after";
 					loadAjax("", "widget-panel", "panel-right", "activeHashtag=" + activeHashtag);
 				}
 			}
 			
 			// If the widget panel isn't visible but the navigation panel is, load widgets there instead
+			/*
 			else if(wPanel.offsetParent !== null)
 			{
 				// Widgets aren't essential. Only show if the load time was fast.
@@ -129,6 +131,7 @@ document.onreadystatechange = function()
 					loadAjax("", "widget-panel", "panel-left", "activeHashtag=" + activeHashtag);
 				}
 			}
+			*/
 		}
 		
 		// Load the notifications (if you're logged in)
@@ -219,6 +222,39 @@ function coreTimer()
 		runChatUpdate();
 	}
 }
+
+/*********************************
+****** Move Dynamic Content ******
+*********************************/
+
+// This section allows dynamically created content (through JavaScript) to be inserted into the widget panel.
+// This allow us to bypass the restrictions on loading dynamic content through an AJAX-loaded page.
+
+// This functions runs after the widget page gets loaded
+function moveDynamicContent()
+{
+	// Identify the proper divs, if available
+	var mvRight = document.getElementById("move-content-wrapper");
+	var dynRight = document.getElementById("dynamic-content-loader");
+	
+	// Move any content in the "move-content-wrapper" div to the right panel
+	if(mvRight !== null)
+	{
+		if(dynRight !== null)
+		{
+			dynRight.appendChild(mvRight);
+			mvRight.style.display = "block";
+		}
+		else
+		{
+			var wPanel = document.getElementById("panel-right");
+			
+			wPanel.appendChild(mvRight);
+			mvRight.style.display = "block";
+		}
+	}
+}
+
 
 /**************************
 ****** Notifications ******
@@ -1346,19 +1382,8 @@ function processAjax(siteURL, scriptName, ajaxDivID, queryString)
 	{
 		if(xmlhttp.readyState == 4 && xmlhttp.status == 200)
 		{
-			// If we're requesting the AJAX call to return to a specific function
-			if(ajaxReturnFunc != "")
-			{
-				if(typeof window[ajaxReturnFunc] == "function")
-				{
-					window[ajaxReturnFunc](xmlhttp.responseText);
-				}
-				
-				ajaxReturnFunc = "";
-			}
-			
 			// Standard AJAX calls return content to a specific DIV
-			else if(ajaxDivID != "")
+			if(ajaxDivID != "")
 			{
 				if(ajaxInsertType == "after")
 				{
@@ -1371,6 +1396,17 @@ function processAjax(siteURL, scriptName, ajaxDivID, queryString)
 					// Replace the AJAX result into the designated DIV
 					document.getElementById(ajaxDivID).innerHTML = xmlhttp.responseText;
 				}
+			}
+			
+			// If we're requesting the AJAX call to return to a specific function
+			if(ajaxReturnFunc != "")
+			{
+				if(typeof window[ajaxReturnFunc] == "function")
+				{
+					window[ajaxReturnFunc](xmlhttp.responseText);
+				}
+				
+				ajaxReturnFunc = "";
 			}
 		}
 	}
