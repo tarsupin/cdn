@@ -135,30 +135,22 @@
 
 /* Responsive Threads */
 @media (min-width:800px) {
-	.post-left { width:128px; }
-	.post-left-avatar { width:205px; }
-	.post-right { margin-left:141px; }
-	.post-right-avatar { margin-left:218px; }
-	.post-img { width:128px; }
+	.post-left, .post-left-avatar  { width:205px; }
+	.post-right, .post-right-avatar { margin-left:218px; }
+	.post-img { width:128px; padding-right:77px; }
 	.post-img-avatar { width:205px; }
 }
 
 @media (min-width:500px) and (max-width:799px) {
-	.post-left { width:128px; }
-	.post-left-avatar { width:128px; }
-	.post-right { margin-left:141px; }
-	.post-right-avatar { margin-left:141px; }
-	.post-img { width:128px; }
-	.post-img-avatar { width:128px; }
+	.post-left, .post-left-avatar { width:128px; }
+	.post-right, .post-right-avatar { margin-left:141px; }
+	.post-img , .post-img-avatar { width:128px; }
 }
 
 @media (min-width:0px) and (max-width:499px) {
-	.post-left { width:86px; }
-	.post-left-avatar { width:86px; }
-	.post-right { margin-left:99px; }
-	.post-right-avatar { margin-left:99px; }
-	.post-img { width:86px; }
-	.post-img-avatar { width:86px; }
+	.post-left, .post-left-avatar { width:86px; }
+	.post-right, .post-right-avatar { margin-left:99px; }
+	.post-img, .post-img-avatar { width:86px; }
 	.post-status { display:none; }
 }
 
