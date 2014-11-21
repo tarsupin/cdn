@@ -175,9 +175,9 @@
 ****** User Colors ******
 ************************/
 
-.role-admin { color:red; font-weight:bold; }
+.role-admin { color:red !important; font-weight:bold; }
 .role-staff { font-weight:bold; }
-.role-artist { color:purple; font-weight:bold; }
-.role-mod { color:orange; font-weight:bold; }
-.role-programmer { color:green; font-weight:bold; }
+.role-artist { color:purple !important; font-weight:bold; }
+.role-mod { color:orange !important; font-weight:bold; }
+.role-programmer { color:green !important; font-weight:bold; }
 
