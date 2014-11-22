@@ -164,7 +164,7 @@
 @media (min-width:800px) {
 	.post-left, .post-left-avatar  { width:205px; }
 	.post-right, .post-right-avatar { margin-left:218px; }
-	.post-img { width:128px; padding-right:77px; }
+	.post-img { width:128px; }
 	.post-img-avatar { width:205px; }
 }
 
