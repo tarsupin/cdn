@@ -107,11 +107,11 @@ p:last-child { padding:0px; }
 ****** Form Fields ******
 ************************/
 
-.uniform input[type=text] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
+.uniform input[type=text], .uniform input[type=number] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
 .uniform input[type=password] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
 .uniform select { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px; }
 .uniform textarea { padding:4px 4px 4px 6px; font-size:16px; resize:vertical; border:solid 1px #bbbbbb; box-sizing:border-box; }
-.uniform input[type=submit] { line-height:22px; vertical-align:middle; padding:8px 13px 8px 13px; border-radius:8px; border:0px; font-size:16px; cursor:pointer; border:solid 1px; }
+.uniform input[type=submit], .uniform input[type=button], .uniform input[type=file] { line-height:22px; vertical-align:middle; padding:8px 13px 8px 13px; border-radius:8px; border:0px; font-size:16px; cursor:pointer; border:solid 1px; }
 
 /************************
 ****** Alert Boxes ******
