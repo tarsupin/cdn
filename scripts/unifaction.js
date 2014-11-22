@@ -11,28 +11,21 @@
 function toggleMenu()
 {
 	// Get the left panel
-	var menu = document.getElementById("panel-left");
+	var menu = document.getElementById("mobile-menu");
 	
 	// If the panel is visible (displayed), remove it
 	if(menu.style.display == "block")
 	{
 		menu.style.display = "none";
-		
-		var m1 = document.getElementById("uni-modal-mobile");
-		
-		m1.parentNode.removeChild(m1);
 	}
 	
 	// If the panel is not displayed, display it
 	else
 	{
-		menu.style.position = "absolute";
 		menu.style.display = "block";
-		menu.style.zIndex = "500";
 		menu.style.width = "100%";
 		
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
-		document.body.insertAdjacentHTML('afterbegin', '<div id="uni-modal-mobile" class="modal-bg" onclick="toggleMenu()"></div>');
 	}
 }
 
