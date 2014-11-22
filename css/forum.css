@@ -43,8 +43,8 @@
 
 .inner-paginate { font-size:0.8em; color:white; }
 .inner-paginate>a, .inner-paginate>a:visited { color:white !important; }
-.inner-paginate>a:hover>span { background-color:#cc4040; }
-.inner-paginate>a>span { padding:0 4px 0 4px; background-color:#ee6060; border-radius:3px; }
+.inner-paginate>a:hover>span { background-color:#ea6060; }
+.inner-paginate>a>span { padding:0 4px 0 4px; background-color:#77B5DB; color:white; border-radius:3px; }
 
 .sticky-thread { background-color:#FFFFDD; }
 
@@ -109,11 +109,11 @@
 #content .thread-tline a { color:white !important; }
 .thread-tline a:hover { text-decoration:underline !important; }
 
-.thread-page { background-color:rgba(190, 190, 90, 0.6); padding:2px 4px 2px 4px; border-radius:4px; }
-.thread-tline .thread-page:hover { text-decoration:none !important; background-color:rgba(190, 90, 90, 1); }
-.thread-page.thread-page-active { background-color:rgba(250, 90, 90, 1) !important; }
+.thread-page { background-color:#77B5DB; padding:2px 4px 2px 4px; border-radius:4px; }
+.thread-tline .thread-page:hover { text-decoration:none !important; background-color:#ea6060 !important; }
+.thread-page.thread-page-active { background-color:#ea6060 !important; }
 
-.thread-post { height:100%; width:100%; overflow:hidden; border:solid 1px #c0c0c0; border-radius:5px; background-color:#ffffff; margin-bottom:6px; }
+.thread-post { height:100%; width:100%; overflow:hidden; border:solid 1px #c0c0c0; border-radius:5px; background-color:#e8eef1; margin-bottom:6px; }
 
 /* Status Bar (Profile Picture, Name, Links) */
 .post-left, .post-left-avatar { float:left; padding:4px; vertical-align:top; border-right:solid 1px #c0c0c0;}
