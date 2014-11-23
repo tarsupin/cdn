@@ -107,8 +107,7 @@ p:last-child { padding:0px; }
 ****** Form Fields ******
 ************************/
 
-.uniform input[type=text], .uniform input[type=number] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
-.uniform input[type=password] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
+.uniform input[type=text], .uniform input[type=number], .uniform input[type=password] { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px #bbbbbb; box-sizing:border-box; }
 .uniform select { padding:4px 4px 4px 6px; font-size:16px; border:solid 1px; }
 .uniform textarea { padding:4px 4px 4px 6px; font-size:16px; resize:vertical; border:solid 1px #bbbbbb; box-sizing:border-box; }
 .uniform input[type=submit], .uniform input[type=button], .uniform input[type=file] { line-height:22px; vertical-align:middle; padding:8px 13px 8px 13px; border-radius:8px; border:0px; font-size:16px; cursor:pointer; border:solid 1px; }
@@ -587,10 +586,10 @@ img.circimg-large { border-radius:50%; width:128px; height:128px; }
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 { color:#152840; }
 
 /* Forms */
-.uniform input[type=text], .uniform input[type=password], .uniform select { color:#475055; border-color:#c0c0c0; }
+.uniform input[type=text], .uniform input[type=number], .uniform input[type=password], .uniform select { color:#475055; border-color:#c0c0c0; }
 .uniform textarea { color:#475055; }
-.uniform input[type=submit] { color:white; background-color:#ea6060; }
-.uniform input[type=submit]:hover { background-color:#fb7c7c; }
+.uniform input[type=submit], .uniform input[type=button], .uniform input[type=file] { color:white; background-color:#ea6060; }
+.uniform input[type=submit]:hover, .uniform input[type=button]:hover, .uniform input[type=file]:hover { background-color:#fb7c7c; }
 
 /* Alert Messages */
 .alert-info { color:#00529B; background-color:#BDE5F8; }
