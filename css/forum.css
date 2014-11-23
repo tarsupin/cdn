@@ -162,8 +162,10 @@
 
 /* Responsive Threads */
 @media (min-width:800px) {
-	.post-left, .post-left-avatar  { width:205px; }
-	.post-right, .post-right-avatar { margin-left:218px; }
+	.post-left  { width:128px; }
+	.post-left-avatar  { width:205px; }
+	.post-right { margin-left:141px; }
+	.post-right-avatar { margin-left:218px; }
 	.post-img { width:128px; }
 	.post-img-avatar { width:205px; }
 }
