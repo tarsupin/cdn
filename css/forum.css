@@ -134,7 +134,7 @@
 .post-right img, .post-right-avatar img { max-width:100%; }
 
 /* Post Elements */
-.quote, .spoiler-header {
+.quote, .spoiler-header, pre {
 	border-radius:4px;
 	margin-left:2em;
 	background-color:#c7e0ee;	
@@ -186,6 +186,18 @@
 	display:none;
 	padding-left:0.5em;
 	margin-left:2em;
+}
+
+pre { overflow:auto; font-family:Consolas,monospace; }
+pre:before
+{
+	content:"\e63b ";
+	color:#2c7099;
+	font-family:'icomoon';
+	font-size:1.25em;
+	position:absolute;
+	margin-left:-1.75em;
+	margin-top:-0.25em;
 }
 
 /* Responsive Threads */

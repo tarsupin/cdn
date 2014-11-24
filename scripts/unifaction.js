@@ -888,24 +888,30 @@ function UniMarkupAdvanced(elementID, tagToAdd)
 			insert = "http://" + insert;
 		}
 	}
-	else if(tagToAdd == "quote") { insert = prompt("Enter the person being quoted:"); }
-	
-	// Run the insert after being prompted
-	if(insert != null && insert != "")
+	else if(tagToAdd == "quote")
 	{
-		UniMarkup(elementID, tagToAdd, insert);
+		insert = prompt("Enter the person being quoted:");
+	
+		// Run the insert after being prompted
+		if(insert != null && insert != "")
+		{
+			UniMarkup(elementID, tagToAdd, insert);
+		}
 	}
 	
-	if(tagToAdd == "spoiler") { insert = prompt("Enter the title of the spoiler:"); }
-	
-	// Run the insert after being prompted
-	if(insert != null && insert != "")
+	else if(tagToAdd == "spoiler")
 	{
-		UniMarkup(elementID, tagToAdd, insert);
+		insert = prompt("Enter the title of the spoiler:");
+	
+		// Run the insert after being prompted
+		if(insert != null && insert != "")
+		{
+			UniMarkup(elementID, tagToAdd, insert);
+		}
 	}
 	
 	// Injection prompts
-	if(tagToAdd == "tag")
+	else if(tagToAdd == "tag")
 	{
 		insert = prompt("Enter the hashtag to include:");
 		
