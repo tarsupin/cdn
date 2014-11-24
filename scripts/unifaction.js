@@ -896,15 +896,16 @@ function UniMarkupAdvanced(elementID, tagToAdd)
 		UniMarkup(elementID, tagToAdd, insert);
 	}
 	
-	if(tagToAdd == "spoiler")
+	if(tagToAdd == "spoiler") { insert = prompt("Enter the title of the spoiler:"); }
+	
+	// Run the insert after being prompted
+	if(insert != null && insert != "")
 	{
-		insert = prompt("Enter the title of the spoiler:");
-		
-		UniMarkup(elementID, insert, "", true);
+		UniMarkup(elementID, tagToAdd, insert);
 	}
 	
 	// Injection prompts
-	else if(tagToAdd == "tag")
+	if(tagToAdd == "tag")
 	{
 		insert = prompt("Enter the hashtag to include:");
 		
