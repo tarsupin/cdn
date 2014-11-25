@@ -81,6 +81,18 @@
 	.content-img-sm img { max-width:100%; }
 	.content-img-sm>.block-caption { font-size:0.9em; }
 	
+	/* Image on Left, 60% Width */
+	.content-img-left-60 { position:relative; float:left; max-width:60%; margin-right:15px; padding:0px; margin-bottom:12px; text-align:center; }
+	.content-img-left-60-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-left-60 img { width:100%; }
+	.content-img-left-60>.block-caption { font-size:0.8em; }
+	
+	/* Image on Left, 50% Width */
+	.content-img-left-50 { position:relative; float:left; max-width:50%; margin-right:15px; padding:0px; margin-bottom:12px; text-align:center; }
+	.content-img-left-50-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-left-50 img { width:100%; }
+	.content-img-left-50>.block-caption { font-size:0.8em; }
+	
 	/* Image on Left, 40% Width */
 	.content-img-left { position:relative; float:left; max-width:40%; margin-right:15px; padding:0px; margin-bottom:12px; text-align:center; }
 	.content-img-left-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
@@ -89,9 +101,21 @@
 	
 	/* Image on Left, 25% Width */
 	.content-img-left-sm { position:relative; float:left; max-width:25%; margin-right:15px; padding:0px; margin-bottom:12px; text-align:center; }
-	.content-img-left-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-left-sm-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
 	.content-img-left-sm img { width:100%; }
 	.content-img-left-sm>.block-caption { font-size:0.8em; }
+	
+	/* Image on Right, 60% Width */
+	.content-img-right-60 { position:relative; float:right; max-width:50%; margin-left:15px; padding:0px; margin-bottom:12px; text-align:center; }
+	.content-img-right-60-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-right-60 img { width:100%; }
+	.content-img-right-60>.block-caption { font-size:0.8em; }
+	
+	/* Image on Right, 50% Width */
+	.content-img-right-50 { position:relative; float:right; max-width:50%; margin-left:15px; padding:0px; margin-bottom:12px; text-align:center; }
+	.content-img-right-50-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-right-50 img { width:100%; }
+	.content-img-right-50>.block-caption { font-size:0.8em; }
 	
 	/* Image on Right, 40% Width */
 	.content-img-right { position:relative; float:right; max-width:40%; margin-left:15px; padding:0px; margin-bottom:12px; text-align:center; }
@@ -101,7 +125,7 @@
 	
 	/* Image on Right, 25% Width */
 	.content-img-right-sm { position:relative; float:right; max-width:25%; margin-left:15px; padding:0px; margin-bottom:12px; text-align:center; }
-	.content-img-right-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
+	.content-img-right-sm-inner { position:relative; display:inline-block; padding:0px; max-width:100%; margin:auto; }
 	.content-img-right-sm img { width:100%; }
 	.content-img-right-sm>.block-caption { font-size:0.8em; }
 	

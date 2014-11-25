@@ -202,11 +202,11 @@ pre:before
 
 /* Responsive Threads */
 @media (min-width:800px) {
-	.post-left  { width:128px; }
+	.post-left  { width:170px; }
 	.post-left-avatar  { width:205px; }
-	.post-right { margin-left:141px; }
+	.post-right { margin-left:183px; }
 	.post-right-avatar { margin-left:218px; }
-	.post-img { width:128px; }
+	.post-img { width:170px; }
 	.post-img-avatar { width:205px; }
 }
 

@@ -715,6 +715,7 @@ body { background-color:#d9eaff; }
 
 /* Footer Display Panel - the section that footer displays get shown */
 .footer-display { background-color:#79bbff; border: solid 1px #2c7099; }
+.footer-display a, .footer-display a:visited { color:#2c7099 !important; }
 
 /* Footer Buttons */
 #friend-button { color:#c0c0c0; }
@@ -755,7 +756,7 @@ body { background-color:#d9eaff; }
 
 /* Chat Display */
 .chat-wrap { background-color:white; }
-.chat-header { border:solid 1px #c0c0c0; color:#475055 !important; }
+.chat-header { border:solid 1px #c0c0c0; }
 .chat-inner { border-left:solid 1px #c0c0c0; border-right:solid 1px #c0c0c0; }
 
 /* Modal CSS */

@@ -459,7 +459,7 @@ function toggleChat(toUser)
 		chatBox = document.getElementById("userChat-" + toUser);
 		
 		// Set the contents
-		chatBox.innerHTML = '<div class="chat-header">@' + toUser + '<div class="close-display"><a href="javascript:toggleChat(\'' + toUser + '\');">X</a></div></div><div class="chat-inner"></div><div class="chat-footer"><input id="chat_write_' + toUser + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + toUser + '\'); }" /></div>';
+		chatBox.innerHTML = '<div class="chat-header"><a href="http://unifaction.social/' + toUser + '">@' + toUser + '</a><div class="close-display"><a href="javascript:toggleChat(\'' + toUser + '\');">X</a></div></div><div class="chat-inner"></div><div class="chat-footer"><input id="chat_write_' + toUser + '" type="text" name="post-chat" value="" placeholder="Say something . . ." maxlength="200" onkeydown="if(event.keyCode == 13) { postUserChat(\'' + toUser + '\'); }" /></div>';
 	}
 	
 	// Toggle the chat display
@@ -536,7 +536,7 @@ function sync_chats(response)
 			document.body.insertAdjacentHTML('beforeend', '<div id="userChat-' + key + '" class="footer-display"></div>');
 			chatBox = document.getElementById("userChat-" + key);
 			
-			prepHTML += '<div class="chat-header">@' + key + '</div><div class="chat-inner">';
+			prepHTML += '<div class="chat-header"><a href="http://unifaction.social/' + key + '">@' + key + '</a></div><div class="close-display"><a href="javascript:toggleChat(\'' + key + '\');">X</a></div></div><div class="chat-inner">';
 			
 			// Loop through each of the chats and prepare the entry
 			for(var i = 0; i < len; i++)
