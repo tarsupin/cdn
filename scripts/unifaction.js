@@ -536,7 +536,7 @@ function sync_chats(response)
 			document.body.insertAdjacentHTML('beforeend', '<div id="userChat-' + key + '" class="footer-display"></div>');
 			chatBox = document.getElementById("userChat-" + key);
 			
-			prepHTML += '<div class="chat-header"><a href="http://unifaction.social/' + key + '">@' + key + '</a></div><div class="close-display"><a href="javascript:toggleChat(\'' + key + '\');">X</a></div></div><div class="chat-inner">';
+			prepHTML += '<div class="chat-header"><a href="http://unifaction.social/' + key + '">@' + key + '</a><div class="close-display"><a href="javascript:toggleChat(\'' + key + '\');">X</a></div></div><div class="chat-inner">';
 			
 			// Loop through each of the chats and prepare the entry
 			for(var i = 0; i < len; i++)
