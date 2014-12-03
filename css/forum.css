@@ -1,18 +1,3 @@
-
-/************************
-****** Page Layout ******
-************************/
-
-/*
-#core-nav { background-color:#77b5db; }
-#core-nav a, #core-nav span { color:#2c7099 !important; }
-#core-nav a:hover { background-color:#97d5fb; }
-
-.core-link { border-bottom:solid 1px #2C7099; }
-
-#container { background-color:#d9e8f7; }
-*/
-
 /*************************
 ****** Forum Styles ******
 *************************/
@@ -202,25 +187,29 @@ pre:before
 
 /* Responsive Threads */
 @media (min-width:800px) {
-	.post-left  { width:170px; }
-	.post-left-avatar  { width:205px; }
+	.post-left { width:178px; }
+	.post-left-avatar  { width:213px; }
 	.post-right { margin-left:183px; }
 	.post-right-avatar { margin-left:218px; }
 	.post-img { width:170px; }
 	.post-img-avatar { width:205px; }
+	.post-status-mobile { display:none; }
 }
 
 @media (min-width:500px) and (max-width:799px) {
-	.post-left, .post-left-avatar { width:128px; }
+	.post-left, .post-left-avatar { width:136px; }
 	.post-right, .post-right-avatar { margin-left:141px; }
 	.post-img , .post-img-avatar { width:128px; }
+	.post-status-mobile { display:none; }
 }
 
 @media (min-width:0px) and (max-width:499px) {
-	.post-left, .post-left-avatar { width:86px; }
+	.post-left, .post-left-avatar { width:94px; }
 	.post-right, .post-right-avatar { margin-left:99px; }
 	.post-img, .post-img-avatar { width:86px; }
 	.post-status { display:none; }
+	.thread-signature { display:none; }
+	.post-status-mobile { display:block; margin-top: 18px; border-top:solid 1px #c0c0c0; text-align:right; }
 }
 
 /* The Post Option Line */
@@ -238,7 +227,7 @@ pre:before
 
 .role-admin { color:red !important; font-weight:bold; }
 .role-staff { font-weight:bold; }
-.role-artist { color:purple !important; font-weight:bold; }
+.role-artist { color:indigo !important; font-weight:bold; }
 .role-mod { color:orange !important; font-weight:bold; }
 .role-programmer { color:green !important; font-weight:bold; }
-
+.role-writer { color:teal !important; font-weight:bold; }
