@@ -166,8 +166,8 @@ timers.userchat.next = 10;
 
 // Chat Timer
 timers.chat = {}
-timers.chat.interval = 4;
-timers.chat.next = 4;
+timers.chat.interval = 12;
+timers.chat.next = 0;
 
 // The core timer runs 4 times every second, but only if you're on the page
 // When the core timer hits an interval of one of the page timers, it runs the appropriate function
