@@ -361,6 +361,12 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 	
 }
 
+@media screen and (max-width:440px) {
+
+	#footer-time { display:none !important; }
+	
+}
+
 /***********************************
 ****** General Display Styles ******
 ***********************************/
@@ -719,6 +725,7 @@ body { background-color:#d9eaff; }
 .footer-display a, .footer-display a:visited { color:#2c7099 !important; }
 
 /* Footer Buttons */
+#footer-time { color:#c0c0c0; border-right: solid 1px #aaaaaa; }
 #friend-button { color:#c0c0c0; }
 #notif-button { color:#c0c0c0; }
 
