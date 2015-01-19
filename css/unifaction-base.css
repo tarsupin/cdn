@@ -781,3 +781,17 @@ body { background-color:#d9eaff; }
 
 /* UniMarkup */
 .hover-wrap .color-draw { background-color:#dddddd; }
+
+
+/************************
+****** User Colors ******
+************************/
+
+.role-admin { color:red !important; font-weight:bold; }
+.role-staff { font-weight:bold; }
+.role-artist { color:indigo !important; font-weight:bold; }
+.role-mod { color:orange !important; font-weight:bold; }
+.role-programmer { color:green !important; font-weight:bold; }
+.role-writer { color:teal !important; font-weight:bold; }
+.role-mod-aide { color:orange !important; }
+.role-writer-aide { color:teal !important; }

@@ -15,7 +15,7 @@
 
 .inner-box { display:table; border-collapse:collapse; background-color:#e8eef1; border:solid 1px #c0c0c0; border-radius:4px; margin-top:6px; border-bottom:none; width:100%; }
 .inner-line { display:table-row; border-bottom:solid 1px #c0c0c0; height:50px; }
-.inner-line a, .inner-line a:visited { color:#686868 !important; }
+.inner-line a:not([class|=role]), .inner-line a:visited:not([class|=role]) { color:#686868 !important; }
 .inner-line a:hover { color:#53aefe !important; }
 
 .inner-name { display:table-cell; vertical-align:top; border-right:solid 1px #c0c0c0; font-weight:bold; color:#56ccc8 !important; padding:5px; }
@@ -103,8 +103,8 @@
 /* Status Bar (Profile Picture, Name, Links) */
 .post-left, .post-left-avatar { float:left; padding:4px; vertical-align:top; border-right:solid 1px #c0c0c0;}
 
-.post-status a { color:#5d5d5d !important; }
-.post-status a:hover { color:#53aefe !important; }
+.post-status a:not([class|=role]), .post-status a:visited:not([class|=role]) { color:#5d5d5d !important; }
+.post-status a:hover:not([class|=role]) { color:#53aefe !important; }
 
 .post-status-top { font-weight:bold; overflow:hidden; }
 .post-status-bottom { margin-top:4px; margin-bottom:8px; font-size:0.8em; overflow:hidden; }
@@ -220,15 +220,3 @@ pre:before
 **********************/
 
 .thread-signature { width:100%; margin-top: 18px; border-top:solid 1px #c0c0c0; max-height:300px; overflow-y:hidden; }
-
-/************************
-****** User Colors ******
-************************/
-
-.role-admin { color:red !important; font-weight:bold; }
-.role-staff { font-weight:bold; }
-.role-artist { color:indigo !important; font-weight:bold; }
-.role-mod { color:orange !important; font-weight:bold; }
-.role-programmer { color:green !important; font-weight:bold; }
-.role-writer { color:teal !important; font-weight:bold; }
-.role-aide { color:black !important; }
