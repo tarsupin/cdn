@@ -128,7 +128,7 @@ document.onreadystatechange = function()
 		}
 		
 		// Load the notifications (if you're logged in)
-		if(loadTime < 3500)
+		if(loadTime < 5000)
 		{
 			if(typeof(JSUser) == "string")
 			{
@@ -833,6 +833,11 @@ function UniMarkup(elementID, tagToAdd, parameterToAdd, inject)
 	var section2 = element.value.substr(startPos, stopPos - startPos);
 	var section3 = element.value.substr(stopPos);
 	
+	// Exception for lists
+	var extra = "";
+	var extramove = 0;
+	if(tagToAdd == "list")	{ extra = "[*]\n[*]\n[*]"; extramove = 3; }
+	
 	// If we're "injecting" a value into the textarea (as opposed to surrounding it with tags)
 	if(inject == true)
 	{
@@ -861,11 +866,11 @@ function UniMarkup(elementID, tagToAdd, parameterToAdd, inject)
 		tagStart += "]";
 		
 		// Update the Element's Text by rebuilding each segment
-		element.value = section1 + tagStart + section2 + tagEnd + section3;		
+		element.value = section1 + tagStart + extra + section2 + tagEnd + section3;		
 		
 		// Update the Element's Selection (Cursor)
-		element.selectionStart = startPos + tagToAdd.length + 2 + paramLen;
-		element.selectionEnd = stopPos + tagToAdd.length + 2 + paramLen;
+		element.selectionStart = startPos + tagToAdd.length + 2 + extramove + paramLen;
+		element.selectionEnd = stopPos + tagToAdd.length + 2 + extramove + paramLen;
 	}
 	
 	// Refocus on the Element
@@ -896,6 +901,18 @@ function UniMarkupAdvanced(elementID, tagToAdd)
 	else if(tagToAdd == "spoiler")
 	{
 		insert = prompt("Enter the title of the spoiler:");
+	}
+	else if(tagToAdd == "color")
+	{
+		insert = prompt("Enter the color:");
+	}
+	else if(tagToAdd == "size")
+	{
+		insert = prompt("Enter the font size:");
+	}
+	else if(tagToAdd == "font")
+	{
+		insert = prompt("Enter the font family:");
 	}
 	
 	// Run the insert after being prompted
@@ -1478,3 +1495,57 @@ function processForm(formID, pageName, ajaxDivID)
 	// You must return false to prevent the default form behavior
 	return false;
 }
+
+// Shortcuts for BBCode
+function shortcut(event, element)
+{
+	if (event.ctrlKey)
+	{
+		var id = element.getAttribute("id");
+		var code = event.keyCode ? event.keyCode : event.which;
+		switch(code)
+		{
+			case 66:
+				event.preventDefault();
+				UniMarkup(id, "b");
+				break;
+			case 85:
+				event.preventDefault();
+				UniMarkup(id, "u");
+				break;
+			case 73:
+				event.preventDefault();
+				UniMarkup(id, "i");
+				break;			
+			case 83:
+				event.preventDefault();
+				UniMarkup(id, "s");
+				break;
+			case 80:
+				event.preventDefault();
+				UniMarkup(id, "img");
+				break;
+			case 76:
+				event.preventDefault();
+				UniMarkupAdvanced(id, "url");
+				break;
+			case 81:
+				event.preventDefault();
+				UniMarkupAdvanced(id, "quote");
+				break;
+			case 72:
+				event.preventDefault();
+				UniMarkupAdvanced(id, "spoiler");
+				break;
+		}
+	}
+}
+
+// Enable shortcuts for the relevant textareas
+var textareas = document.getElementsByTagName("textarea");
+for(i=0; i<textareas.length; i++)
+{
+	if(textareas[i].hasAttribute("id"))
+		textareas[i].setAttribute("onkeydown", "shortcut(event, this)");
+}
+	
