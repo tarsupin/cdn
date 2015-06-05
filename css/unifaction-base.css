@@ -547,7 +547,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 @media screen and (min-width:1200px) { .show-1200 {display:none;} }
 @media screen and (min-width:1000px) { .show-1000 {display:none;} }
 @media screen and (min-width:800px) { .show-800 {display:none;} }
-@media screen and (min-width:600px) { .show-600 {display:none;} }
+@media screen and (min-width:600px) { .show-600 {display:none !important;} }
 @media screen and (min-width:400px) { .show-400 {display:none;} }
 
 

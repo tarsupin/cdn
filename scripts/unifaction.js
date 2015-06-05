@@ -1499,7 +1499,7 @@ function processForm(formID, pageName, ajaxDivID)
 // Shortcuts for BBCode
 function shortcut(event, element)
 {
-	if (event.ctrlKey)
+	if (event.ctrlKey && !event.altKey)
 	{
 		var id = element.getAttribute("id");
 		var code = event.keyCode ? event.keyCode : event.which;
