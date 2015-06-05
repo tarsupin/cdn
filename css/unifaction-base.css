@@ -322,7 +322,7 @@ a.button { line-height:45px; vertical-align:middle; padding:8px 13px 8px 13px; b
 /* Footer Display Panel - the section that footer displays get shown */
 #footer-panel { position:fixed; bottom:36px; right:0px; width:100%; z-index:1000; max-height:350px; }
 
-.footer-display { position:fixed; display:none; width:220px; bottom:36px; right:0px; margin-left:8px; overflow:hidden; }
+.footer-display { position:fixed; display:none; width:220px; bottom:36px; right:0px; margin-left:8px; overflow-y:auto; max-height:75%; }
 
 /* Footer Buttons */
 #footer-left { display:none; position:absolute; left:0px; padding:0; margin:0; }
