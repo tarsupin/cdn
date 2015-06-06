@@ -310,11 +310,11 @@ function sync_notifications(response)
 	// Loop through each of the notifications and prepare the entry
 	for(var i = 0; i < noteCount; i++)
 	{
-		prepHTML += '<div class="notif-slot"><div class="notif-entry"><a href="' + noteList[i]['url'] + '">' + noteList[i]['message'] + '</a></div></div>';
+		prepHTML += '<div class="notif-slot"><div class="notif-entry"><a href="' + noteList[i]['url'] + '"' + (noteList[i]['uni_id'] == "0" ? ' style="color:#ee6666 !important;"' : '') + '>' + noteList[i]['message'] + '</a></div></div>';
 	}
 	for(var i = noteCount; i < len; i++)
 	{
-		prepHTML += '<div class="notif-slot"><div class="notif-entry" style="opacity:0.5;filter: alpha(opacity=50);"><a href="' + noteList[i]['url'] + '">' + noteList[i]['message'] + '</a></div></div>';
+		prepHTML += '<div class="notif-slot"><div class="notif-entry" style="opacity:0.5;filter: alpha(opacity=50);"><a href="' + noteList[i]['url'] + '"' + (noteList[i]['uni_id'] == "0" ? ' style="color:#ee6666 !important;"' : '') + '>' + noteList[i]['message'] + '</a></div></div>';
 	}
 	
 	prepHTML += '<div class="notif-more"><div class="notif-more-inner"><a href="http://unifaction.com/my-notifications">All Notifications <span class="icon-arrow-right"></span></a></div></div>';
